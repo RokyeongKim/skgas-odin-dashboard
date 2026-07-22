@@ -15,9 +15,10 @@ export function renderPanelB(records, spreadPairId) {
   const dates  = records.map(r => r.date);
   const vals   = computeSpread(records, keyA, keyB);
   const stats  = rollingStats(vals, 252);
-  const means  = stats.map(s => s.mean);
-  const upper  = stats.map(s => s.mean !== null && s.std !== null ? +(s.mean + s.std).toFixed(3) : null);
-  const lower  = stats.map(s => s.mean !== null && s.std !== null ? +(s.mean - s.std).toFixed(3) : null);
+  const means     = stats.map(s => s.mean);
+  const lower     = stats.map(s => s.mean !== null && s.std !== null ? +(s.mean - s.std).toFixed(3) : null);
+  const upper     = stats.map(s => s.mean !== null && s.std !== null ? +(s.mean + s.std).toFixed(3) : null);
+  const bandWidth = upper.map((u, i) => u !== null && lower[i] !== null ? +(u - lower[i]).toFixed(3) : null);
 
   // Current percentile
   const curVal = vals[vals.length - 1];
@@ -56,14 +57,15 @@ export function renderPanelB(records, spreadPairId) {
       },
       { name: '평균', type: 'line', data: means, showSymbol: false, lineStyle: { color: '#8b949e', type: 'dashed', width: 1 } },
       {
-        name: '+1σ', type: 'line', data: upper, showSymbol: false,
-        lineStyle: { color: 'rgba(248,81,73,0.5)', width: 1 },
-        areaStyle: { color: 'rgba(248,81,73,0.05)' },
-      },
-      {
         name: '-1σ', type: 'line', data: lower, showSymbol: false,
         lineStyle: { color: 'rgba(63,185,80,0.5)', width: 1 },
-        areaStyle: { color: 'rgba(63,185,80,0.05)' },
+        stack: 'sigma-band',
+      },
+      {
+        name: '+1σ', type: 'line', data: bandWidth, showSymbol: false,
+        lineStyle: { color: 'rgba(248,81,73,0.5)', width: 1 },
+        areaStyle: { color: 'rgba(0,212,255,0.06)' },
+        stack: 'sigma-band',
       },
     ],
   }, true);
