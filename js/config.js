@@ -59,8 +59,8 @@ export const SPREAD_PAIRS = [
 ];
 
 export const RELATIVE_PAIRS = [
-  { id: 'CV',            label: 'CV = FEI/Brent',       target: 0.90, group: 'buy' },
-  { id: 'NV',            label: 'NV = MB/Brent',         target: 0.88, group: 'buy' },
-  { id: 'FEI_MOPJ',      label: 'FEI/MOPJ',             target: 0.97, group: 'buy' },
-  { id: 'JKM_FEI_RATIO', label: 'JKM vs FEI(M-2) ratio', target: null, group: 'sell' },
+  { id: 'CV',            label: 'CV = FEI/Brent',        target: CONVERSION.CV_SOURCING_TARGET, group: 'buy' },
+  { id: 'NV',            label: 'NV = MB/Brent',          target: 0.88,                          group: 'buy' },
+  { id: 'FEI_MOPJ',      label: 'FEI/MOPJ',              target: CONVERSION.FEIS_MOPJ_RATIO,    group: 'buy' },
+  { id: 'JKM_FEI_RATIO', label: 'JKM vs FEI(M-2) ratio', target: null,                          group: 'sell' },
 ];
