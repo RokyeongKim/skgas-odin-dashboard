@@ -1,0 +1,10 @@
+[
+  { "id": "war_start",    "date": "2026-02-28", "label": "개전 (미·이스라엘 공습)",          "color": "#ff4444", "type": "war" },
+  { "id": "ceasefire1",   "date": "2026-04-08", "label": "1차 휴전 (2주)",                   "color": "#44ff88", "type": "ceasefire" },
+  { "id": "mou_news",     "date": "2026-06-12", "label": "MOU 뉴스화",                      "color": "#ffdd44", "type": "mou" },
+  { "id": "mou_signed",   "date": "2026-06-17", "label": "MOU 서명",                        "color": "#ffdd44", "type": "mou" },
+  { "id": "mou_end",      "date": "2026-07-08", "label": "Trump MOU 종료 시사",              "color": "#ff8844", "type": "escalation" },
+  { "id": "strait_close", "date": "2026-07-11", "label": "호르무즈 봉쇄 (IRGC)",             "color": "#ff4444", "type": "war" },
+  { "id": "strait_open",  "date": "2026-07-15", "label": "봉쇄 복원",                       "color": "#44ff88", "type": "ceasefire" },
+  { "id": "iran_escalate","date": "2026-07-18", "label": "이란 MOU 이행중단 (전면전 재격화)", "color": "#ff0000", "type": "war" }
+]
