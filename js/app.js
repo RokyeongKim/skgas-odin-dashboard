@@ -1,6 +1,6 @@
 // js/app.js — 앱 초기화 + 이벤트 핸들러
 
-import { loadAll, filterByDays, getPricesNative } from './data.js';
+import { loadAll, filterByDays } from './data.js';
 import { INDEX_META } from './config.js';
 import { initPanelA, renderPanelA, resizePanelA, toggleIndex } from './panelA.js';
 import { initPanelB, renderPanelB, resizePanelB } from './panelB.js';
