@@ -101,10 +101,11 @@ jkm   = add_event_impact(jkm,   dates, '2026-07-18', +0.13)
 fei   = add_event_impact(fei,   dates, '2026-07-18', +0.10)
 
 # ---- Convert to $/mmbtu for timeseries.json ----
-LPG_MMBTU = 47.84
-LNG_MMBTU = 51.876
-MB_TO_TON  = 5.208
-LPG_TO_BBL = 8.2
+LPG_MMBTU       = 47.84   # LPG 1 ton = 47.84 mmbtu (KB 정본)
+LNG_MMBTU       = 51.876  # LNG 1 ton = 51.876 mmbtu (KB 정본)
+MB_CPG_TO_TON   = 5.208   # MB ¢/gal × 5.208 = $/ton  (1 gal=42.5L 기준 환산)
+LPG_TO_BBL      = 8.2     # LPG 1 ton = 8.2 bbl Brent equiv (KB 정본)
+# NV coefficient: MB ¢/gal × 0.42 = $/bbl (42 gal/bbl ÷ 100¢/$ = 0.42)
 
 def r(v, d=2):
     return round(v, d)
@@ -128,7 +129,7 @@ for i, d in enumerate(dates):
             "FEI":   r(fei[i] / LPG_MMBTU, 3),
             "CP":    r(cp[i] / LPG_MMBTU, 3),
             "MOPJ":  r(mopj[i] / LPG_MMBTU, 3),
-            "MB":    r(mb[i] * MB_TO_TON / LPG_MMBTU, 3),
+            "MB":    r(mb[i] * MB_CPG_TO_TON / LPG_MMBTU, 3),
             "JKM":   r(jkm[i], 3),
             "TTF":   r(ttf[i], 3),
             "HH":    r(hh[i], 3),
