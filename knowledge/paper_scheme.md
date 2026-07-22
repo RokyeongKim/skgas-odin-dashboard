@@ -35,5 +35,5 @@ JKM/HH: KOGAS 포트폴리오 비중에 따라 (Brent 55%, HH 10%, JKM 35%)
 | MOPJ| $/ton    | MOPJ÷47.84 (납사 기준, LPG 환산) |
 | Brent| $/bbl   | Brent÷8.2 (LPG 기준) |
 | JKM | $/mmbtu  | - |
-| TTF | $/mmbtu  | (€/MWh 변환) |
+| TTF | $/mmbtu  | (€/MWh × 환율 ÷ 29.307로 변환) |
 | HH  | $/mmbtu  | - |
