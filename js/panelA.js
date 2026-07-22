@@ -3,6 +3,7 @@
 import { INDEX_META, EVENTS } from './config.js';
 
 let chart = null;
+let visibleSet = new Set(Object.keys(INDEX_META));
 
 export function initPanelA(dom) {
   chart = echarts.init(dom, 'dark');
@@ -63,6 +64,7 @@ export function renderPanelA(records) {
     legend: {
       top: 5,
       textStyle: { color: '#8b949e', fontSize: 11 },
+      selected: Object.fromEntries(Object.entries(INDEX_META).map(([k, m]) => [m.label, visibleSet.has(k)])),
     },
     grid: { left: 55, right: 20, top: 50, bottom: 50 },
     xAxis: {
@@ -96,6 +98,7 @@ export function renderPanelA(records) {
 }
 
 export function toggleIndex(key, visible) {
+  if (visible) visibleSet.add(key); else visibleSet.delete(key);
   if (!chart) return;
   const meta = INDEX_META[key];
   chart.dispatchAction({ type: visible ? 'legendSelect' : 'legendUnSelect', name: meta.label });

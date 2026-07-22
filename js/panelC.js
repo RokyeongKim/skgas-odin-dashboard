@@ -32,25 +32,33 @@ export function renderPanelC(records, tab) {
       lineStyle: { width: 1.8, color: colors[idx % colors.length] },
       itemStyle: { color: colors[idx % colors.length] },
     };
+    // Event marks on first series only
     if (idx === 0) {
       s.markLine = {
         symbol: 'none',
-        data: [
-          ...eventMarkLineData,
-          ...(p.target !== null ? [[
-            {
-              yAxis: p.target,
-              lineStyle: { color: '#d29922', type: 'dotted', width: 2 },
-              label: {
-                show: true,
-                formatter: `目標 ${(p.target * 100).toFixed(0)}%`,
-                color: '#d29922',
-                fontSize: 10,
-              },
-            },
-            { yAxis: p.target },
-          ]] : []),
-        ],
+        data: [...eventMarkLineData],
+        silent: true,
+      };
+    }
+    // Target line on every series that has a target
+    if (p.target !== null) {
+      const targetEntry = [
+        {
+          yAxis: p.target,
+          lineStyle: { color: '#d29922', type: 'dotted', width: 2 },
+          label: {
+            show: true,
+            formatter: `目標 ${(p.target * 100).toFixed(0)}%`,
+            color: '#d29922',
+            fontSize: 10,
+          },
+        },
+        { yAxis: p.target },
+      ];
+      s.markLine = {
+        ...(s.markLine || {}),
+        symbol: 'none',
+        data: [...(s.markLine?.data || []), targetEntry],
         silent: true,
       };
     }
