@@ -1,14 +1,17 @@
 # SK Gas Odin 옵셔널리티 대시보드
 
-> ⚠️ 현재 Dummy 데이터 기반. 실데이터 교체 방법은 §데이터 갱신 참조.
+**접속 URL: https://rokyeongkim.github.io/skgas-odin-dashboard/**
+
+> 데이터: Odin 실측값 107개 관측일 (2026-01-02 ~ 2026-07-23) · 34개 이벤트 플래그
 
 ## 대시보드 기능
 
-- **Panel A** — 8종 Index 시계열 ($/mmbtu 환산, 이벤트 플래그 수직선, 기간 필터)
+- **Panel A** — 8종 Index 시계열 ($/mmbtu 환산, 이벤트 플래그 수직선 Tier1/2 구분, 기간 필터)
 - **Panel B** — Spread 시계열 (JKM-FEI 등 4쌍, ±1σ 밴드, 현재 백분위)
 - **Panel C** — 상대가 시계열 (CV=FEI/Brent, NV=MB/Brent, FEI/MOPJ, JKM vs FEI(M-2))
 - **Panel D** — 이벤트별 Native 가격 표 (개전~현재 컬럼, 변화율 색상)
 - **Panel E** — 옵셔널리티 추천 카드 (소싱/Unwind/관찰, 예상수익·리스크)
+- **Panel F** — Flag Factor 라이브러리 (34개 이벤트, archetype별 반응 패턴, 행 클릭 상세)
 
 ## 로컬 실행
 
