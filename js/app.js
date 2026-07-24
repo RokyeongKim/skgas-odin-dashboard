@@ -7,6 +7,8 @@ import { initPanelB, renderPanelB, resizePanelB } from './panelB.js';
 import { initPanelC, renderPanelC, resizePanelC } from './panelC.js';
 import { renderPanelD } from './panelD.js';
 import { renderPanelE } from './panelE.js';
+import { renderPanelF } from './panelF.js';
+import { getEvents } from './data.js';
 
 let currentDays = 365;
 let currentSpread = 'JKM_FEI';
@@ -18,7 +20,7 @@ async function init() {
   // Data date display
   const latest = timeseries[timeseries.length - 1];
   document.getElementById('data-date').textContent =
-    `기준일: ${latest.date} (Dummy 데이터)`;
+    `기준일: ${latest.date} | 총 ${timeseries.length}개 관측일`;
 
   // Init ECharts panels
   initPanelA(document.getElementById('chart-A'));
@@ -87,6 +89,7 @@ function renderAll(timeseries, pricesNative) {
   renderCharts();
   renderPanelD(pricesNative, document.getElementById('table-D'));
   renderPanelE(document.getElementById('optionality-cards'));
+  renderPanelF(getEvents(), document.getElementById('panel-F-content'));
 }
 
 init().catch(err => {

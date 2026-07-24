@@ -1,6 +1,7 @@
 // js/panelA.js — Panel A: 8종 Index 시계열 (ECharts, 이벤트 플래그 수직선)
 
-import { INDEX_META, EVENTS } from './config.js';
+import { INDEX_META } from './config.js';
+import { getEvents } from './data.js';
 
 let chart = null;
 let visibleSet = new Set(Object.keys(INDEX_META));
@@ -12,37 +13,69 @@ export function initPanelA(dom) {
 export function renderPanelA(records) {
   if (!chart || !records.length) return;
 
-  const dates = records.map(r => r.date);
+  const events = getEvents() || [];
+  const dates  = records.map(r => r.date);
+  const dateSet = new Set(dates);
+
   const series = Object.entries(INDEX_META).map(([key, meta]) => ({
     name: meta.label,
     type: 'line',
     data: records.map(r => r.mmbtu[key] ?? null),
     showSymbol: false,
-    lineStyle: { width: 1.5, color: meta.color },
+    lineStyle: {
+      width: 1.5,
+      color: meta.color,
+      // Tier 2 데이터: 점선 처리는 data.js에서 소스 필드로 판별 가능하지만
+      // 여기서는 시리즈 전체를 실선 유지 (Tier2 기간은 별도 참조 시리즈로 추후 추가)
+    },
     itemStyle: { color: meta.color },
   }));
 
-  // Event flag vertical lines via markLine on first series
-  const markLineData = EVENTS.map(ev => ([
-    {
-      xAxis: ev.date,
-      lineStyle: { color: ev.color, type: 'dashed', width: 1.5 },
-      label: {
-        show: true,
-        position: 'insideEndTop',
-        formatter: ev.label.slice(0, 6),
-        color: ev.color,
-        fontSize: 9,
-      },
-    },
-    { xAxis: ev.date },
-  ]));
+  // Event flag vertical lines (Tier1=실선, Tier2=점선+회색)
+  const markLineData = events
+    .filter(ev => !ev.is_band && dateSet.has(ev.date))
+    .map(ev => {
+      const isTier2 = ev.tier === 2;
+      return [
+        {
+          xAxis: ev.date,
+          lineStyle: {
+            color: isTier2 ? '#555' : ev.color,
+            type: isTier2 ? 'dotted' : 'dashed',
+            width: isTier2 ? 1 : 1.5,
+          },
+          label: {
+            show: !isTier2,
+            position: 'insideEndTop',
+            formatter: ev.label.slice(0, 8),
+            color: ev.color,
+            fontSize: 9,
+          },
+        },
+        { xAxis: ev.date },
+      ];
+    });
 
   if (series.length > 0) {
     series[0].markLine = {
       symbol: 'none',
       data: markLineData,
+      silent: false,
+    };
+  }
+
+  // Band events as markArea
+  const bandAreas = events
+    .filter(ev => ev.is_band && ev.end_date)
+    .map(ev => ([
+      { xAxis: ev.date,     itemStyle: { color: `${ev.color}18` }, label: { show: true, position: 'insideTopLeft', formatter: ev.label.slice(0, 10), color: ev.color, fontSize: 8 } },
+      { xAxis: ev.end_date },
+    ]));
+
+  if (bandAreas.length > 0 && series.length > 0) {
+    series[0].markArea = {
       silent: true,
+      data: bandAreas,
     };
   }
 
