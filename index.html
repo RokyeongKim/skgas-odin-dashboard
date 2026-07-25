@@ -36,18 +36,14 @@
       <div class="chart-wrap" id="chart-A"></div>
     </section>
 
-    <!-- Panel B: Spread -->
+    <!-- Panel B: JKM-FEI Spread (기준월별) -->
     <section class="panel panel-B">
       <div class="panel-header">
-        <h2>B. Spread 시계열</h2>
-        <select id="spread-select">
-          <option value="JKM_FEI">JKM − FEI(M-2)</option>
-          <option value="FEI_Brent">FEI − Brent(LPG equiv)</option>
-          <option value="JKM_TTF">JKM − TTF</option>
-          <option value="JKM_HH">JKM − HH</option>
-        </select>
+        <h2>B. JKM−FEI Spread (기준월 선택)</h2>
+        <select id="spread-select"><!-- app.js가 기준월로 채움 --></select>
         <span id="spread-pct" class="badge"></span>
       </div>
+      <div class="panel-note">관측일별 해당 계약월 JKM−FEI spread 추이. 음영: ±1σ 구간 (2026-02~현재 실측 기준)</div>
       <div class="chart-wrap" id="chart-B"></div>
     </section>
 

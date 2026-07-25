@@ -1,21 +1,23 @@
 // js/app.js — 앱 초기화 + 이벤트 핸들러
 
-import { loadAll, filterByDays } from './data.js';
+import { loadAll, filterByDays, getEvents } from './data.js';
 import { INDEX_META } from './config.js';
 import { initPanelA, renderPanelA, resizePanelA, toggleIndex } from './panelA.js';
-import { initPanelB, renderPanelB, resizePanelB } from './panelB.js';
+import { initPanelB, renderPanelB, resizePanelB, loadForwardData, getForwardMonths } from './panelB.js';
 import { initPanelC, renderPanelC, resizePanelC } from './panelC.js';
 import { renderPanelD } from './panelD.js';
 import { renderPanelE } from './panelE.js';
 import { renderPanelF } from './panelF.js';
-import { getEvents } from './data.js';
 
 let currentDays = 365;
-let currentSpread = 'JKM_FEI';
+let currentMonth = '2026-12';
 let currentRelTab = 'buy';
 
 async function init() {
-  const { timeseries, pricesNative } = await loadAll();
+  const [{ timeseries, pricesNative }] = await Promise.all([
+    loadAll(),
+    loadForwardData(),
+  ]);
 
   // Data date display
   const latest = timeseries[timeseries.length - 1];
@@ -43,6 +45,16 @@ async function init() {
     togglesEl.appendChild(btn);
   });
 
+  // Populate spread-select with forward contract months
+  const spreadSel = document.getElementById('spread-select');
+  getForwardMonths().forEach(month => {
+    const opt = document.createElement('option');
+    opt.value = month;
+    opt.textContent = month;
+    if (month === currentMonth) opt.selected = true;
+    spreadSel.appendChild(opt);
+  });
+
   // Initial render
   renderAll(timeseries, pricesNative);
 
@@ -56,10 +68,10 @@ async function init() {
     });
   });
 
-  // Spread selector
-  document.getElementById('spread-select').addEventListener('change', e => {
-    currentSpread = e.target.value;
-    renderPanelB(filterByDays(currentDays), currentSpread);
+  // Spread selector → change contract month
+  spreadSel.addEventListener('change', e => {
+    currentMonth = e.target.value;
+    renderPanelB(currentMonth);
   });
 
   // Relative price tabs
@@ -81,7 +93,7 @@ async function init() {
 function renderCharts() {
   const records = filterByDays(currentDays);
   renderPanelA(records);
-  renderPanelB(records, currentSpread);
+  renderPanelB(currentMonth);
   renderPanelC(records, currentRelTab);
 }
 
