@@ -13,6 +13,13 @@ let currentDays = 365;
 let currentMonth = '2026-12';
 let currentRelTab = 'buy';
 
+const INDEX_GROUPS = [
+  { name: 'LPG',  keys: ['MB', 'CP', 'FEI'],    color: '#f0a500' },
+  { name: 'LNG',  keys: ['JKM', 'TTF', 'HH'],   color: '#4ade80' },
+  { name: '유가', keys: ['Brent', 'MOPJ'],        color: '#ff6b6b' },
+];
+const toggleBtnMap = {};
+
 async function init() {
   const [{ timeseries, pricesNative }] = await Promise.all([
     loadAll(),
@@ -29,21 +36,57 @@ async function init() {
   initPanelB(document.getElementById('chart-B'));
   initPanelC(document.getElementById('chart-C'));
 
-  // Build index toggle buttons
-  const togglesEl = document.getElementById('index-toggles');
-  Object.entries(INDEX_META).forEach(([key, meta]) => {
+  // Build group toggle buttons
+  const groupsEl = document.getElementById('group-toggles');
+  INDEX_GROUPS.forEach(grp => {
     const btn = document.createElement('button');
-    btn.className = 'toggle-btn';
-    btn.textContent = meta.label;
-    btn.style.borderColor = meta.color;
-    btn.style.color = meta.color;
-    btn.dataset.key = key;
+    btn.className = 'btn-group';
+    btn.textContent = grp.name;
+    btn.style.borderColor = grp.color;
+    btn.style.color = grp.color;
     btn.addEventListener('click', () => {
-      btn.classList.toggle('off');
-      toggleIndex(key, !btn.classList.contains('off'));
+      const allOn = grp.keys.every(k => !toggleBtnMap[k]?.classList.contains('off'));
+      grp.keys.forEach(k => {
+        const ib = toggleBtnMap[k];
+        if (!ib) return;
+        if (allOn) { ib.classList.add('off');    toggleIndex(k, false); }
+        else       { ib.classList.remove('off'); toggleIndex(k, true);  }
+      });
+      syncAllGroupBtns();
     });
-    togglesEl.appendChild(btn);
+    groupsEl.appendChild(btn);
   });
+
+  // Build individual toggle buttons (ordered by group, with separators)
+  const togglesEl = document.getElementById('index-toggles');
+  INDEX_GROUPS.forEach((grp, gi) => {
+    if (gi > 0) {
+      const sep = document.createElement('span');
+      sep.className = 'toggle-sep';
+      sep.textContent = '|';
+      togglesEl.appendChild(sep);
+    }
+    grp.keys.forEach(key => {
+      const meta = INDEX_META[key];
+      if (!meta) return;
+      const btn = document.createElement('button');
+      btn.className = 'toggle-btn';
+      btn.textContent = meta.label;
+      btn.style.borderColor = meta.color;
+      btn.style.color = meta.color;
+      btn.dataset.key = key;
+      toggleBtnMap[key] = btn;
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('off');
+        toggleIndex(key, !btn.classList.contains('off'));
+        syncAllGroupBtns();
+      });
+      togglesEl.appendChild(btn);
+    });
+  });
+
+  // Initial group button state sync
+  syncAllGroupBtns();
 
   // Populate spread-select with forward contract months
   const spreadSel = document.getElementById('spread-select');
@@ -87,6 +130,15 @@ async function init() {
   // Resize handler
   window.addEventListener('resize', () => {
     resizePanelA(); resizePanelB(); resizePanelC();
+  });
+}
+
+function syncAllGroupBtns() {
+  document.querySelectorAll('.btn-group').forEach(btn => {
+    const grp = INDEX_GROUPS.find(g => g.name === btn.textContent);
+    if (!grp) return;
+    const allOn = grp.keys.every(k => !toggleBtnMap[k]?.classList.contains('off'));
+    btn.classList.toggle('off', !allOn);
   });
 }
 
