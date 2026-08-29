@@ -112,6 +112,7 @@ export function renderPanelC(records, tab) {
     },
     yAxis: {
       type: 'value',
+      ...computeYAxisRange(visiblePairs, _lastRecords, isBuy),
       axisLabel: {
         color: '#8b949e', fontSize: 10,
         formatter: isBuy ? v => `${(v * 100).toFixed(0)}%` : v => `$${v.toFixed(2)}`,
@@ -131,6 +132,46 @@ export function renderPanelC(records, tab) {
       },
     ],
   }, true);
+}
+
+/**
+ * 표시 중인 pair들의 실제 값 + 기준선을 감싸는 최소 y축 범위 계산.
+ * 하나만 보일 때는 그 범위에 딱 맞춰서 등락을 크게 보이게 함.
+ * - Buy 탭(비율): 5%p padding, 5% 단위로 rounding
+ * - Sell 탭($): 10% padding, 소수점 유지
+ */
+function computeYAxisRange(visiblePairs, records, isBuy) {
+  if (!visiblePairs.length || !records.length) return {};
+
+  const allVals = [];
+  visiblePairs.forEach(p => {
+    records.forEach(r => {
+      const v = r.derived[p.id];
+      if (v !== null && v !== undefined && isFinite(v)) allVals.push(v);
+    });
+    // 기준선도 범위에 포함시켜서 잘리지 않게
+    (p.thresholds || []).forEach(t => allVals.push(t.value));
+  });
+
+  if (!allVals.length) return {};
+
+  const rawMin = Math.min(...allVals);
+  const rawMax = Math.max(...allVals);
+  const span = rawMax - rawMin;
+
+  if (isBuy) {
+    // 비율: 5%p padding, 0.05 단위로 내림/올림
+    const pad = Math.max(0.03, span * 0.15);
+    const min = Math.floor((rawMin - pad) * 20) / 20; // 0.05 단위
+    const max = Math.ceil((rawMax + pad) * 20) / 20;
+    return { min, max };
+  } else {
+    // $: 10% padding
+    const pad = Math.max(0.2, span * 0.15);
+    const min = Math.floor((rawMin - pad) * 10) / 10;
+    const max = Math.ceil((rawMax + pad) * 10) / 10;
+    return { min, max };
+  }
 }
 
 /** 특정 상대가 pair의 표시 여부 토글 */
