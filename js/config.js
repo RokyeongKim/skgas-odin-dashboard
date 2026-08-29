@@ -25,7 +25,7 @@ export const INDEX_META = {
   MB:    { label: 'MB (Mont Belvieu)', unit: '¢/gal',   color: '#f0a500', group: 'buy',  toMmbtu: v => v * CONVERSION.MB_CPG_TO_MMBTU },
   FEI:   { label: 'FEI (Far East)',    unit: '$/ton',   color: '#00d4ff', group: 'buy',  toMmbtu: v => v / CONVERSION.LPG_TON_TO_MMBTU },
   Brent: { label: 'Brent',            unit: '$/bbl',   color: '#ff6b6b', group: 'sell', toMmbtu: v => v / CONVERSION.LPG_TON_TO_BBL },
-  CP:    { label: 'CP (Saudi Aramco)', unit: '$/ton',   color: '#ffa552', group: 'buy',  toMmbtu: v => v / CONVERSION.LPG_TON_TO_MMBTU },
+  CP:    { label: 'CP (Saudi Aramco)', unit: '$/ton',   color: '#f472b6', group: 'buy',  toMmbtu: v => v / CONVERSION.LPG_TON_TO_MMBTU },
   MOPJ:  { label: 'MOPJ (Naphtha)',   unit: '$/ton',   color: '#c77dff', group: 'sell', toMmbtu: v => v / CONVERSION.LPG_TON_TO_MMBTU },
   JKM:   { label: 'JKM (LNG Asia)',   unit: '$/mmbtu', color: '#4ade80', group: 'sell', toMmbtu: v => v },
   TTF:   { label: 'TTF (Europe Gas)', unit: '$/mmbtu', color: '#a0aec0', group: 'sell', toMmbtu: v => v },
@@ -58,9 +58,46 @@ export const SPREAD_PAIRS = [
   { id: 'JKM_HH',    labelA: 'JKM',   labelB: 'HH',    label: 'JKM − HH' },
 ];
 
+// 각 상대가별 소싱/판매 판단 기준선 (사용자 가이드 기반)
+// - CV(FEI/Brent): 적정 소싱·판매 range 미확정 → 기준선 없음
+// - NV(MB/Brent): 38.5% 이하 = 경쟁력 있는 소싱. '28~ Brent slope 하락 리스크 유의
+// - FEI/MOPJ: 85% 소싱 → 90% 판매 = 5% 차익, 90%↑ 시 Tolerance 미공급 옵션 활용
 export const RELATIVE_PAIRS = [
-  { id: 'CV',            label: 'CV = FEI/Brent',        target: CONVERSION.CV_SOURCING_TARGET, group: 'buy' },
-  { id: 'NV',            label: 'NV = MB/Brent',          target: 0.88,                          group: 'buy' },
-  { id: 'FEI_MOPJ',      label: 'FEI/MOPJ',              target: CONVERSION.FEIS_MOPJ_RATIO,    group: 'buy' },
-  { id: 'JKM_FEI_M2',    label: 'JKM vs FEI(M-2)',       target: null,                          group: 'sell' },
+  {
+    id: 'CV',
+    label: 'CV = FEI/Brent',
+    color: '#00d4ff',
+    group: 'buy',
+    thresholds: [],
+    note: '적정 소싱·판매 range 미확정 (참고 지표)',
+  },
+  {
+    id: 'NV',
+    label: 'NV = MB/Brent',
+    color: '#4ade80',
+    group: 'buy',
+    thresholds: [
+      { value: 0.385, label: '경쟁력 조달선 38.5%', color: '#4ade80', style: 'dashed' },
+    ],
+    note: 'NV ≤ 38.5% → 경쟁력 있는 조달. \'28~ KOGAS Brent slope 14%→12% 하락 시 더 낮은 조달 필요',
+  },
+  {
+    id: 'FEI_MOPJ',
+    label: 'FEI/MOPJ',
+    color: '#f0a500',
+    group: 'buy',
+    thresholds: [
+      { value: 0.85, label: '소싱 기준 85% (Y+1, Y+2 원월물)', color: '#00d4ff', style: 'dashed' },
+      { value: 0.90, label: '판매 기준 90% → 5% 차익', color: '#f85149', style: 'dashed' },
+    ],
+    note: '85% 소싱 → 90% 판매 = 5% 차익. 90% 훨씬 이상이면 Tolerance 미공급 옵션 활용',
+  },
+  {
+    id: 'JKM_FEI_M2',
+    label: 'JKM vs FEI(M-2)',
+    color: '#c77dff',
+    group: 'sell',
+    thresholds: [],
+    note: 'LNG 소싱 리드타임 2M 반영',
+  },
 ];

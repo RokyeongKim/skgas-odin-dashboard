@@ -1,10 +1,10 @@
 // js/app.js — 앱 초기화 + 이벤트 핸들러
 
 import { loadAll, filterByDays, getEvents } from './data.js';
-import { INDEX_META } from './config.js';
+import { INDEX_META, RELATIVE_PAIRS } from './config.js';
 import { initPanelA, renderPanelA, resizePanelA, toggleIndex } from './panelA.js';
 import { initPanelB, renderPanelB, resizePanelB, loadForwardData, getForwardMonths } from './panelB.js';
-import { initPanelC, renderPanelC, resizePanelC } from './panelC.js';
+import { initPanelC, renderPanelC, resizePanelC, togglePair } from './panelC.js';
 import { renderPanelD } from './panelD.js';
 import { renderPanelE } from './panelE.js';
 import { renderPanelF } from './panelF.js';
@@ -117,19 +117,44 @@ async function init() {
     renderPanelB(currentMonth);
   });
 
-  // Relative price tabs
+  // Relative price tabs — 탭 전환 시 토글 버튼도 재구성
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelector('.tab-btn.active')?.classList.remove('active');
       btn.classList.add('active');
       currentRelTab = btn.dataset.tab;
+      buildRelToggles(currentRelTab);
       renderPanelC(filterByDays(currentDays), currentRelTab);
     });
   });
 
+  // 초기 상대가 토글 구성
+  buildRelToggles(currentRelTab);
+
   // Resize handler
   window.addEventListener('resize', () => {
     resizePanelA(); resizePanelB(); resizePanelC();
+  });
+}
+
+/** Panel C: 현재 탭에 맞는 상대가 pair 토글 버튼 재구성 */
+function buildRelToggles(tab) {
+  const el = document.getElementById('rel-toggles');
+  if (!el) return;
+  el.innerHTML = '';
+  const pairs = RELATIVE_PAIRS.filter(p => p.group === tab);
+  pairs.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'toggle-btn';
+    btn.textContent = p.label;
+    btn.style.borderColor = p.color;
+    btn.style.color = p.color;
+    btn.dataset.pair = p.id;
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('off');
+      togglePair(p.id, !btn.classList.contains('off'));
+    });
+    el.appendChild(btn);
   });
 }
 

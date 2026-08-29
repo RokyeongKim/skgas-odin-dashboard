@@ -195,3 +195,29 @@ export function renderPanelF(events, container) {
     });
   });
 }
+
+/** Panel A의 플래그 클릭 시 호출 — 필터 초기화 후 해당 이벤트 상세 열기 + 스크롤 */
+export function openEventInPanelF(eventId) {
+  // 필터 리셋 (숨겨진 이벤트일 수 있으므로)
+  currentFilter = { archetype: 'all', tier: 'all', channel: 'all' };
+  ['f-arch', 'f-channel', 'f-tier'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (sel) sel.value = 'all';
+  });
+  applyFilter();
+
+  const row = document.querySelector(`.ev-row[data-id="${eventId}"]`);
+  const detailRow = document.getElementById(`detail-${eventId}`);
+  if (!row || !detailRow) return;
+
+  // 다른 detail 모두 접기, 대상만 열기
+  document.querySelectorAll('.ev-detail-row').forEach(r => { r.style.display = 'none'; });
+  detailRow.style.display = '';
+
+  // 강조 애니메이션
+  row.classList.add('ev-row-flash');
+  setTimeout(() => row.classList.remove('ev-row-flash'), 2200);
+
+  // 스크롤
+  row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}

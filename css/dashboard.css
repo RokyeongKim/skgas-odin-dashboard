@@ -47,8 +47,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   gap: 12px; padding: 16px;
 }
 .panel-A { grid-column: 1 / -1; }
-.panel-B { grid-column: 1; }
-.panel-C { grid-column: 2; }
+.panel-B { grid-column: 1 / -1; }
+.panel-C { grid-column: 1 / -1; }
 .panel-D { grid-column: 1 / -1; }
 .panel-E { grid-column: 1 / -1; }
 .panel-F { grid-column: 1 / -1; }
@@ -65,6 +65,15 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 /* Chart containers */
 .chart-wrap { width: 100%; height: 320px; }
 .panel-A .chart-wrap { height: 380px; }
+.panel-B .chart-wrap { height: 340px; }
+.panel-C .chart-wrap { height: 360px; }
+
+/* Panel C note (동적으로 채워짐) */
+.panel-C-note {
+  font-size: 0.75rem; color: var(--text-muted); margin: 4px 0 8px;
+  padding: 6px 10px; background: rgba(0,212,255,0.05); border-left: 2px solid var(--accent);
+  border-radius: 3px;
+}
 
 /* Group toggle buttons */
 .group-toggles { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
@@ -179,6 +188,13 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 }
 .ev-row { cursor: pointer; transition: background 0.1s; }
 .ev-row:hover td { background: rgba(255,255,255,0.04); }
+
+/* Panel A 플래그 클릭 시 강조 */
+@keyframes rowFlash {
+  0%   { background: rgba(0, 212, 255, 0.45); }
+  100% { background: transparent; }
+}
+.ev-row-flash td { animation: rowFlash 2.2s ease-out; }
 .ev-row.tier2 td { opacity: 0.6; }
 .ev-table td { padding: 7px 10px; border-bottom: 1px solid #1a2030; vertical-align: top; }
 .col-date { white-space: nowrap; color: var(--text-muted); font-size: 0.75rem; min-width: 110px; }
