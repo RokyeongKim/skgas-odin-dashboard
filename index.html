@@ -30,11 +30,29 @@
     <section class="panel panel-A">
       <div class="panel-header">
         <h2>A. Index 시계열 ($/mmbtu)</h2>
-        <div class="panel-note">환산: LPG 1ton=47.84mmbtu / Brent ÷8.2 / MB×5.208÷47.84 · <b style="color:#00d4ff">📍 상단 플래그 클릭 → Panel F 상세</b></div>
+        <div class="panel-note">환산: LPG 1ton=47.84mmbtu / Brent·WTI ÷8.2 / MB C3×5.208÷47.84 · 참고환산: C2 ×0.1517, nC4 ×0.0971, iC4 ×0.1010, F/O380 ÷40.5 · <b style="color:#00d4ff">📍 상단 플래그 클릭 → Panel F 상세</b></div>
       </div>
       <div class="group-toggles" id="group-toggles"></div>
       <div class="index-toggles" id="index-toggles"></div>
       <div class="chart-wrap" id="chart-A"></div>
+    </section>
+
+    <!-- Panel A-2: 지표별 Native Range · 이상치 기준 -->
+    <section class="panel panel-A2">
+      <div class="panel-header">
+        <h2>A-2. 지표별 가격 Range · 이상치 기준 (Native 단위)</h2>
+        <div class="a2-controls">
+          <label>지표 <select id="a2-index-select"></select></label>
+          <label>기준구간 <select id="a2-baseline-select"></select></label>
+        </div>
+      </div>
+      <div class="panel-note">
+        음영 = 기준구간 평균 ±1σ (정상범위) · 점선 = ±2σ (벗어나면 <b style="color:#f85149">이례적</b>, 정규분포 가정 시 상·하위 각 2.3%) · 점선(옅음) = P5/P95 실측 백분위 ·
+        <span style="color:#f0a500">◆</span> = 일간 변동률이 기준구간 일간변동 σ의 2배 초과한 날 · 기간 필터(1M~3Y)는 차트 표시 구간, 기준구간은 통계 산출 구간
+      </div>
+      <div class="a2-summary" id="a2-summary">&nbsp;</div>
+      <div class="chart-wrap" id="chart-A2"></div>
+      <div class="table-wrap" id="table-A2"></div>
     </section>
 
     <!-- Panel B: JKM-FEI Spread (기준월별) -->
@@ -96,7 +114,7 @@
   </main>
 
   <footer class="footer">
-    <span>출처: Odin (skgas.co.kr) · KB 변환계수 · Notion MCP</span>
+    <span>출처: Odin 일별 가격표 (skgas.co.kr) · KB 변환계수 · Notion MCP</span>
     <span>환산: LPG 1ton=47.84mmbtu · LNG 1ton=51.876mmbtu · Brent 1bbl=8.2 LPG equiv</span>
   </footer>
 

@@ -34,8 +34,9 @@ function computeJkmFeiLag(records) {
   const BDAYS_2M = 43;
   return records.map((r, i) => {
     const feePast = i >= BDAYS_2M ? records[i - BDAYS_2M].native.FEI : null;
-    const jkmFeiM2 = feePast !== null
-      ? r.native.JKM - feePast / CONVERSION.LPG_TON_TO_MMBTU
+    const jkmNow  = r.native.JKM;
+    const jkmFeiM2 = (feePast !== null && feePast !== undefined && jkmNow !== null && jkmNow !== undefined)
+      ? jkmNow - feePast / CONVERSION.LPG_TON_TO_MMBTU
       : null;
     r.derived.JKM_FEI_M2 = jkmFeiM2 !== null ? Math.round(jkmFeiM2 * 1000) / 1000 : null;
     return r;
@@ -84,4 +85,58 @@ export function currentPercentile1Y(key, windowSize = 252) {
   const cur = latestDerived(key);
   if (cur === null || cur === undefined || arr.length < 2) return null;
   return Math.round((arr.filter(v => v <= cur).length / arr.length) * 100);
+}
+
+/** Latest non-null native value with its date */
+export function latestNativeWithDate(key) {
+  if (!_timeseries) return null;
+  for (let i = _timeseries.length - 1; i >= 0; i--) {
+    const v = _timeseries[i].native[key];
+    if (v !== null && v !== undefined) return { value: v, date: _timeseries[i].date };
+  }
+  return null;
+}
+
+function quantile(sorted, q) {
+  if (!sorted.length) return null;
+  const pos = (sorted.length - 1) * q;
+  const lo = Math.floor(pos), hi = Math.ceil(pos);
+  return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
+}
+
+/** Descriptive stats (mean, sample std, min/max, percentiles) for a value array (nulls ignored) */
+export function seriesStats(vals) {
+  const v = vals.filter(x => x !== null && x !== undefined && !Number.isNaN(x));
+  if (v.length < 2) return null;
+  const n = v.length;
+  const mean = v.reduce((a, b) => a + b, 0) / n;
+  const std  = Math.sqrt(v.reduce((a, b) => a + (b - mean) ** 2, 0) / (n - 1));
+  const s = [...v].sort((a, b) => a - b);
+  return {
+    n, mean, std, min: s[0], max: s[n - 1],
+    p5: quantile(s, 0.05), p25: quantile(s, 0.25), p50: quantile(s, 0.5),
+    p75: quantile(s, 0.75), p95: quantile(s, 0.95),
+  };
+}
+
+/** Day-over-day % change stats (consecutive non-null observations only) */
+export function dailyChangeStats(vals) {
+  const pct = [];
+  let prev = null;
+  vals.forEach(v => {
+    if (v === null || v === undefined) { prev = null; return; }
+    if (prev !== null && prev !== 0) pct.push((v - prev) / prev * 100);
+    prev = v;
+  });
+  const st = seriesStats(pct);
+  if (!st) return null;
+  const absSorted = pct.map(Math.abs).sort((a, b) => a - b);
+  return { ...st, absP95: quantile(absSorted, 0.95), maxAbs: absSorted[absSorted.length - 1], pct };
+}
+
+/** Percentile rank (0-100) of value x within array */
+export function percentileRank(vals, x) {
+  const v = vals.filter(y => y !== null && y !== undefined);
+  if (!v.length || x === null || x === undefined) return null;
+  return Math.round(v.filter(y => y <= x).length / v.length * 100);
 }

@@ -1,11 +1,11 @@
-// js/panelA.js — Panel A: 8종 Index 시계열 + 이벤트 플래그(클릭 → Panel F 연동)
+// js/panelA.js — Panel A: Index 시계열 ($/mmbtu 환산) + 이벤트 플래그(클릭 → Panel F 연동)
 
 import { INDEX_META } from './config.js';
 import { getEvents } from './data.js';
 import { openEventInPanelF } from './panelF.js';
 
 let chart = null;
-let visibleSet = new Set(Object.keys(INDEX_META));
+let visibleSet = new Set(Object.entries(INDEX_META).filter(([, m]) => m.defaultOn !== false).map(([k]) => k));
 let _events = [];
 let _handlerBound = false;
 

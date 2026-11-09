@@ -3,6 +3,7 @@
 import { loadAll, filterByDays, getEvents } from './data.js';
 import { INDEX_META, RELATIVE_PAIRS } from './config.js';
 import { initPanelA, renderPanelA, resizePanelA, toggleIndex } from './panelA.js';
+import { initPanelA2, renderPanelA2, resizePanelA2 } from './panelA2.js';
 import { initPanelB, renderPanelB, resizePanelB, loadForwardData, getForwardMonths } from './panelB.js';
 import { initPanelC, renderPanelC, resizePanelC, togglePair } from './panelC.js';
 import { renderPanelD } from './panelD.js';
@@ -14,9 +15,10 @@ let currentMonth = '2026-12';
 let currentRelTab = 'buy';
 
 const INDEX_GROUPS = [
-  { name: 'LPG',  keys: ['MB', 'CP', 'FEI'],    color: '#f0a500' },
-  { name: 'LNG',  keys: ['JKM', 'TTF', 'HH'],   color: '#4ade80' },
-  { name: '유가', keys: ['Brent', 'MOPJ'],        color: '#ff6b6b' },
+  { name: 'LPG 아시아',  keys: ['FEI', 'FEI_C4', 'CP', 'CP_C4'],                                   color: '#00d4ff' },
+  { name: 'LPG 미주·유럽', keys: ['MB', 'MB_nonTET_C3', 'MB_nC4', 'MB_iC4', 'C2', 'ARA_C3', 'ARA_C4'], color: '#f0a500' },
+  { name: 'LNG',        keys: ['JKM', 'TTF', 'HH'],                                               color: '#4ade80' },
+  { name: '유가·제품',   keys: ['Brent', 'WTI', 'MOPJ', 'FO380'],                                   color: '#ff6b6b' },
 ];
 const toggleBtnMap = {};
 
@@ -33,6 +35,13 @@ async function init() {
 
   // Init ECharts panels
   initPanelA(document.getElementById('chart-A'));
+  initPanelA2({
+    chartDom: document.getElementById('chart-A2'),
+    select:   document.getElementById('a2-index-select'),
+    baseline: document.getElementById('a2-baseline-select'),
+    table:    document.getElementById('table-A2'),
+    summary:  document.getElementById('a2-summary'),
+  });
   initPanelB(document.getElementById('chart-B'));
   initPanelC(document.getElementById('chart-C'));
 
@@ -76,6 +85,7 @@ async function init() {
       btn.style.color = meta.color;
       btn.dataset.key = key;
       toggleBtnMap[key] = btn;
+      if (meta.defaultOn === false) { btn.classList.add('off'); toggleIndex(key, false); }
       btn.addEventListener('click', () => {
         btn.classList.toggle('off');
         toggleIndex(key, !btn.classList.contains('off'));
@@ -133,7 +143,7 @@ async function init() {
 
   // Resize handler
   window.addEventListener('resize', () => {
-    resizePanelA(); resizePanelB(); resizePanelC();
+    resizePanelA(); resizePanelA2(); resizePanelB(); resizePanelC();
   });
 }
 
@@ -170,6 +180,7 @@ function syncAllGroupBtns() {
 function renderCharts() {
   const records = filterByDays(currentDays);
   renderPanelA(records);
+  renderPanelA2(records);
   renderPanelB(currentMonth);
   renderPanelC(records, currentRelTab);
 }
