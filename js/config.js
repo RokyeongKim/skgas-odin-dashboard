@@ -74,13 +74,15 @@ export const NATIVE_META = {
 
 // Panel A-2 통계 기준구간 (lastN = 최근 N 영업일, filter = 날짜 조건)
 export const BASELINES = [
-  { id: 'all',     label: '전체기간 (2023-01~)',             filter: (r) => true },
-  { id: 'prewar',  label: '개전 전 (2023-01 ~ 2026-02-27)',  filter: (r) => r.date < '2026-02-28' },
+  { id: 'all',     label: '전체기간 (2021-01~)',             filter: (r) => true },
+  { id: 'prewar',  label: '개전 전 (2021-01 ~ 2026-02-27)',  filter: (r) => r.date < '2026-02-28' },
   { id: 'war',     label: '개전 후 (2026-03-02~)',           filter: (r) => r.date >= '2026-03-02' },
   { id: 'y2026',   label: '2026년',                          filter: (r) => r.date.startsWith('2026') },
   { id: 'y2025',   label: '2025년',                          filter: (r) => r.date.startsWith('2025') },
   { id: 'y2024',   label: '2024년',                          filter: (r) => r.date.startsWith('2024') },
   { id: 'y2023',   label: '2023년',                          filter: (r) => r.date.startsWith('2023') },
+  { id: 'y2022',   label: '2022년 (우크라이나 전쟁)',          filter: (r) => r.date.startsWith('2022') },
+  { id: 'y2021',   label: '2021년',                          filter: (r) => r.date.startsWith('2021') },
   { id: 'last60',  label: '최근 60 영업일',                   lastN: 60 },
   { id: 'last120', label: '최근 120 영업일',                  lastN: 120 },
   { id: 'last250', label: '최근 250 영업일 (≈1년)',           lastN: 250 },

@@ -36,7 +36,7 @@ Odin (사내 시스템)
   ├─ Notion MCP → scripts/parse_notion.js → raw/notion/                        (구)
   └─ Excel 파일  → scripts/parse_excel.js → raw/files/                          (구)
                               ↓
-                   data/timeseries.json   (1,000 records, 2023-01-03~2026-11-05 일별 spot)
+                   data/timeseries.json   (1,520 records, 2021-01-04~2026-11-05 일별 spot, 6개년)
                    data/events.json       (34개 플래그, §5-1A)
                    data/prices_native.json (이벤트 시점별 스냅샷)
                               ↓
