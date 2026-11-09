@@ -9,6 +9,7 @@ import { initPanelC, renderPanelC, resizePanelC, togglePair } from './panelC.js'
 import { renderPanelD } from './panelD.js';
 import { renderPanelE } from './panelE.js';
 import { renderPanelF } from './panelF.js';
+import { initTooltips } from './glossary.js';
 
 let currentDays = 365;
 let currentMonth = '2026-12';
@@ -23,6 +24,7 @@ const INDEX_GROUPS = [
 const toggleBtnMap = {};
 
 async function init() {
+  initTooltips();
   const [{ timeseries, pricesNative }] = await Promise.all([
     loadAll(),
     loadForwardData(),
@@ -84,6 +86,7 @@ async function init() {
       btn.style.borderColor = meta.color;
       btn.style.color = meta.color;
       btn.dataset.key = key;
+      btn.dataset.tipKey = key;
       toggleBtnMap[key] = btn;
       if (meta.defaultOn === false) { btn.classList.add('off'); toggleIndex(key, false); }
       btn.addEventListener('click', () => {

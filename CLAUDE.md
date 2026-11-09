@@ -15,7 +15,7 @@ SK Gas Odin 지표 시계열 대시보드. Odin 데이터를 기반으로 LNG/LP
 npx serve .          # 또는 python -m http.server 8080
 
 # Odin 일별 가격표(TSV) → timeseries.json + prices_native.json (현재 정본 경로)
-python3 scripts/parse_odin_tsv.py data/raw/odin_daily_2026-01-01_2026-11-05.tsv
+python3 scripts/parse_odin_tsv.py            # data/raw/odin_daily_*.tsv 전부 병합 (연도 추가 시 TSV만 넣고 재실행)
 
 # (구) Excel → timeseries.json 변환
 XLSX_PATH="C:/Users/rice2/AppData/Roaming/npm/node_modules/xlsx" node scripts/parse_excel.js
@@ -36,7 +36,7 @@ Odin (사내 시스템)
   ├─ Notion MCP → scripts/parse_notion.js → raw/notion/                        (구)
   └─ Excel 파일  → scripts/parse_excel.js → raw/files/                          (구)
                               ↓
-                   data/timeseries.json   (220 records, 2026-01-02~11-05 일별 spot)
+                   data/timeseries.json   (1,000 records, 2023-01-03~2026-11-05 일별 spot)
                    data/events.json       (34개 플래그, §5-1A)
                    data/prices_native.json (이벤트 시점별 스냅샷)
                               ↓
@@ -76,6 +76,7 @@ Odin (사내 시스템)
 | `js/app.js`    | 초기화·이벤트 핸들러·패널 오케스트레이션 |
 | `js/panelA.js` | ECharts 시계열 (Tier1 수직선 실선, Tier2 점선, band markArea) |
 | `js/panelA2.js`| 지표별 Native 단위 Range·이상치 (기준구간 μ±1σ 밴드, ±2σ 선, P5/P95, 일간 스파이크 ◆, 전 지표 요약표) |
+| `js/glossary.js`| 지표 설명 정본(INDEX_DESC) + 마우스오버 툴팁(`data-tip-key`) · Panel A 범례/토글, A-2 표, D 표에 적용 |
 | `js/panelB.js` | Spread 시계열 + 평균±1σ 밴드 + 백분위 |
 | `js/panelC.js` | 상대가 시계열 (Buy/Sell 탭 분리, CV/NV/FEI_MOPJ/JKM_FEI_M2) |
 | `js/panelD.js` | Native 단위 가격 표 (이벤트 컬럼 × Index 행) |

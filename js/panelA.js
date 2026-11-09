@@ -3,6 +3,7 @@
 import { INDEX_META } from './config.js';
 import { getEvents } from './data.js';
 import { openEventInPanelF } from './panelF.js';
+import { descHtml } from './glossary.js';
 
 let chart = null;
 let visibleSet = new Set(Object.entries(INDEX_META).filter(([, m]) => m.defaultOn !== false).map(([k]) => k));
@@ -120,6 +121,13 @@ export function renderPanelA(records) {
     legend: {
       top: 5,
       textStyle: { color: '#8b949e', fontSize: 11 },
+      tooltip: {
+        show: true,
+        formatter: params => {
+          const key = Object.keys(INDEX_META).find(k => INDEX_META[k].label === params.name);
+          return key ? descHtml(key) : params.name;
+        },
+      },
       selected: Object.fromEntries(Object.entries(INDEX_META).map(([k, m]) => [m.label, visibleSet.has(k)])),
     },
     grid: { left: 55, right: 20, top: 80, bottom: 50 },

@@ -5,6 +5,7 @@
 
 import { NATIVE_META, BASELINES } from './config.js';
 import { getTimeseries, seriesStats, dailyChangeStats, latestNativeWithDate, percentileRank } from './data.js';
+import { descText, descHtml } from './glossary.js';
 
 let chart = null;
 let curKey = 'FEI';
@@ -22,7 +23,7 @@ export function initPanelA2({ chartDom, select, baseline, table, summary }) {
   Object.entries(groups).forEach(([g, items]) => {
     const og = document.createElement('optgroup'); og.label = g;
     items.forEach(([k, m]) => {
-      const o = document.createElement('option'); o.value = k; o.textContent = `${m.label} (${m.unit})`;
+      const o = document.createElement('option'); o.value = k; o.textContent = `${m.label} (${m.unit})`; o.title = descText(k);
       if (k === curKey) o.selected = true;
       og.appendChild(o);
     });
@@ -169,9 +170,10 @@ function renderChart() {
     ],
   }, true);
 
-  // 요약 문장
+  // 요약 문장 (+ 지표 설명)
   if (summaryEl && st && st.current) {
     const c = STATUS_COLOR[st.status];
+    const desc = descHtml(curKey, { compact: true });
     const dcTxt = st.daily ? `일간 변동 σ ${st.daily.std.toFixed(2)}% → 하루 ±${(2 * st.daily.std).toFixed(1)}% 이상 움직이면 이례적 (기준구간 내 ${spikesCount(st)}회)` : '';
     summaryEl.innerHTML =
       `<b style="color:${meta.color}">${meta.label}</b> 현재 <b>${fmt(st.current.value, d)} ${meta.unit}</b> (${st.current.date}) · ` +
@@ -179,7 +181,8 @@ function renderChart() {
       `기준구간 평균 ${fmt(st.mean, d)}, 정상범위(μ±1σ) ${fmt(st.mean - st.std, d)}~${fmt(st.mean + st.std, d)}, ` +
       `이례 기준(μ±2σ) <span style="color:#58a6ff">${fmt(st.mean - 2 * st.std, d)}</span> 미만 / <span style="color:#f85149">${fmt(st.mean + 2 * st.std, d)}</span> 초과 · ` +
       `P5~P95 ${fmt(st.p5, d)}~${fmt(st.p95, d)} · 최소~최대 ${fmt(st.min, d)}~${fmt(st.max, d)}<br/>` +
-      `<span style="color:#8b949e">${dcTxt}</span>`;
+      `<span style="color:#8b949e">${dcTxt}</span>` +
+      (desc ? `<div class="a2-desc">${desc}</div>` : '');
   }
 }
 
@@ -204,7 +207,7 @@ function renderTable() {
     const c = STATUS_COLOR[st.status] || '#8b949e';
     const dc = st.daily;
     html += `<tr class="range-row${sel}" data-key="${key}">
-      <td style="color:${meta.color};font-weight:600">${meta.label}</td>
+      <td style="color:${meta.color};font-weight:600" data-tip-key="${key}">${meta.label} <span class="tip-mark">ⓘ</span></td>
       <td class="val-neutral">${meta.unit}</td>
       <td><b>${fmt(st.current?.value, d)}</b><br><small class="val-neutral">${st.current?.date || ''}</small></td>
       <td style="color:${c};font-weight:600">${st.z >= 0 ? '+' : ''}${st.z.toFixed(2)}σ<br><small class="val-neutral">${st.pct}%ile</small></td>

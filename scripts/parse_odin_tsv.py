@@ -2,7 +2,8 @@
 """scripts/parse_odin_tsv.py — Odin 일별 가격표(TSV) → data/timeseries.json & data/prices_native.json
 
 사용법:
-    python3 scripts/parse_odin_tsv.py data/raw/odin_daily_2026-01-01_2026-11-05.tsv
+    python3 scripts/parse_odin_tsv.py data/raw/odin_daily_*.tsv     # 여러 파일 → 날짜 기준 병합
+    python3 scripts/parse_odin_tsv.py                               # 인자 없으면 data/raw/odin_daily_*.tsv 전부
 
 입력 TSV 컬럼(헤더 없음, 탭 구분, 결측 '-'):
     Date | Brent | WTI | CP C3 | CP C4 | FEI C3 | FEI C4 | Purity C2 |
@@ -13,8 +14,9 @@
   - 결측은 결측으로 둔다 (보간·캐리포워드 금지). 모든 값이 결측인 날짜는 제외.
   - 기존 timeseries.json 에만 있는 TTF/HH(월 단위 참조값)는 같은 날짜에 한해 그대로 유지.
   - 파일 > Notion 우선: 같은 날짜의 기존 값은 TSV 값으로 대체.
+  - 여러 TSV 에 같은 날짜가 있으면 나중에 지정된(파일명 정렬상 뒤) 파일 값이 우선.
 """
-import json, sys, os, statistics
+import json, sys, os, glob
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_TS     = os.path.join(ROOT, 'data', 'timeseries.json')
@@ -72,14 +74,9 @@ def to_mmbtu(key, v):
         return r(v)
     return None   # 운임 등 에너지 환산 불가
 
-def main(tsv_path):
-    legacy = {}
-    if os.path.exists(OUT_TS):
-        for rec in json.load(open(OUT_TS, encoding='utf-8')):
-            legacy[rec['date']] = {k: rec['native'].get(k) for k in LEGACY_KEYS}
-
-    records = []
-    for line in open(tsv_path, encoding='utf-8'):
+def read_tsv(path):
+    rows = {}
+    for line in open(path, encoding='utf-8'):
         parts = line.rstrip('\n').split('\t')
         if len(parts) < len(COLS) + 1:
             continue
@@ -89,6 +86,24 @@ def main(tsv_path):
         native = {k: num(v) for k, v in zip(COLS, parts[1:len(COLS) + 1])}
         if all(v is None for v in native.values()):
             continue   # 공휴일 등 전부 결측 → 제외
+        rows[date] = native
+    return rows
+
+def main(tsv_paths):
+    legacy = {}
+    if os.path.exists(OUT_TS):
+        for rec in json.load(open(OUT_TS, encoding='utf-8')):
+            legacy[rec['date']] = {k: rec['native'].get(k) for k in LEGACY_KEYS}
+
+    merged = {}
+    for path in sorted(tsv_paths):
+        rows = read_tsv(path)
+        print(f'{os.path.basename(path)}: {len(rows)} rows')
+        merged.update(rows)
+
+    records = []
+    for date in sorted(merged):
+        native = dict(merged[date])
         for k in LEGACY_KEYS:
             native[k] = legacy.get(date, {}).get(k)
 
@@ -132,6 +147,7 @@ def main(tsv_path):
     print(f'prices_native.json: {len(snap) - 1} event snapshots + current')
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
+    paths = sys.argv[1:] or glob.glob(os.path.join(ROOT, 'data', 'raw', 'odin_daily_*.tsv'))
+    if not paths:
         sys.exit(__doc__)
-    main(sys.argv[1])
+    main(paths)

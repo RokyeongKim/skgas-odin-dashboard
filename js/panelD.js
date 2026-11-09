@@ -32,7 +32,7 @@ export function renderPanelD(pricesNative, container) {
   html += '<th>개전 대비 변화율</th></tr></thead><tbody>';
 
   INDEX_ROWS.forEach(row => {
-    html += `<tr><td>${row.label}<br><small style="color:#8b949e">${row.unit}</small></td>`;
+    html += `<tr><td data-tip-key="${row.key}">${row.label} <span class="tip-mark">ⓘ</span><br><small style="color:#8b949e">${row.unit}</small></td>`;
     EVENT_COLUMNS.forEach(col => {
       const evData = pricesNative[col.id];
       const val = evData?.[row.key];
