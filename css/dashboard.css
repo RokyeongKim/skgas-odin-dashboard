@@ -47,6 +47,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   gap: 12px; padding: 16px;
 }
 .panel-A { grid-column: 1 / -1; }
+.panel-A1 { grid-column: 1 / -1; }
 .panel-A2 { grid-column: 1 / -1; }
 .panel-B { grid-column: 1 / -1; }
 .panel-C { grid-column: 1 / -1; }
@@ -80,6 +81,28 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .tip-mark { font-size: 0.68rem; color: #58a6ff; opacity: 0.8; margin-left: 2px; }
 [data-tip-key] { cursor: help; }
 .a2-desc { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border); color: var(--text-muted); font-size: 0.74rem; }
+
+/* Panel A-1: 시장 읽기 */
+.brief-head { margin-bottom: 12px; }
+.brief-meta { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 8px; }
+.brief-head p { font-size: 0.86rem; line-height: 1.65; margin: 8px 0 0; }
+.brief-regime {
+  display: inline-block; padding: 8px 12px; border: 1px solid; border-radius: 6px;
+  background: rgba(255,255,255,0.02); font-size: 0.9rem; max-width: 100%;
+}
+.brief-regime-tag { display: inline-block; color: #000; font-size: 0.7rem; font-weight: 700; padding: 1px 7px; border-radius: 3px; margin-right: 6px; }
+.brief-regime-why { font-size: 0.76rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5; }
+.brief-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.brief-card { background: #0d1117; border: 1px solid var(--border); border-top: 3px solid; border-radius: 6px; padding: 10px 14px; }
+.brief-card-title { font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; }
+.brief-card ul { margin: 0; padding-left: 16px; }
+.brief-card li { font-size: 0.78rem; line-height: 1.6; color: var(--text); margin-bottom: 3px; }
+.brief-sub { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin: 6px 0; }
+.brief-table-wrap { overflow-x: auto; margin-bottom: 10px; }
+.brief-guide { font-size: 0.76rem; color: var(--text-muted); }
+.brief-guide summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.brief-guide ul { margin: 6px 0 0; padding-left: 18px; line-height: 1.6; }
+@media (max-width: 900px) { .brief-grid { grid-template-columns: 1fr; } }
 
 /* Panel A-2: Range · 이상치 */
 .a2-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-left: auto; }

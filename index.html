@@ -40,6 +40,18 @@
       <div class="chart-wrap" id="chart-A"></div>
     </section>
 
+    <!-- Panel A-1: 지금 시장 읽기 (통계 기반 자동 해석) -->
+    <section class="panel panel-A1">
+      <div class="panel-header">
+        <h2>A-1. 지금 시장 읽기 — 다년도 통계 기반 자동 해석</h2>
+        <div class="a2-controls">
+          <label>통계 기준구간 <select id="a1-baseline-select"></select></label>
+        </div>
+      </div>
+      <div class="panel-note">규칙 기반으로 자동 생성되는 해석입니다. 각 지표의 현재값이 기준구간 분포의 어디에 있는지(z-score·백분위·역대 극값 대비)를 문장으로 풀어 쓰고, 지표군 조합으로 국면을 분류합니다. 원인(이벤트)은 Panel F 참조.</div>
+      <div id="brief-content"><div class="loading">해석 생성 중...</div></div>
+    </section>
+
     <!-- Panel A-2: 지표별 Native Range · 이상치 기준 -->
     <section class="panel panel-A2">
       <div class="panel-header">

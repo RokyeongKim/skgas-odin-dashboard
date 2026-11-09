@@ -48,13 +48,18 @@ CPG_TO_MMBTU = {
 FO_MMBTU_PER_TON = 40.5            # HSFO 380cst ≈ 6.35 bbl/ton × 6.38 mmbtu/bbl (참고)
 
 def num(s):
+    """'1,234.5' → 1234.5, '-' → None, '(37.63)' → -37.63 (회계식 음수: 2020-04-20 WTI 등)"""
     s = s.strip().replace(',', '')
     if s in ('', '-'):
         return None
+    neg = s.startswith('(') and s.endswith(')')
+    if neg:
+        s = s[1:-1].strip()
     try:
-        return float(s)
+        v = float(s)
     except ValueError:
         return None
+    return -v if neg else v
 
 def r(v, d=3):
     return None if v is None else round(v, d)

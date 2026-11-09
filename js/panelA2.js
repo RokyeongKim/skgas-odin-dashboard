@@ -3,8 +3,9 @@
 //  - 일간 변동률이 기준구간 일간변동 σ의 2배를 넘는 날은 ◆ 스파이크 마커로 표시
 //  - 하단 표: 전 지표 Range 요약 (행 클릭 → 차트 지표 전환)
 
-import { NATIVE_META, BASELINES } from './config.js';
-import { getTimeseries, seriesStats, dailyChangeStats, latestNativeWithDate, percentileRank } from './data.js';
+import { NATIVE_META } from './config.js';
+import { percentileRank } from './data.js';
+import { getBaselines, baselineRecords as _baselineRecords, statsFor as _statsFor, STATUS_LABEL, STATUS_COLOR } from './stats.js';
 import { descText, descHtml } from './glossary.js';
 
 let chart = null;
@@ -31,7 +32,7 @@ export function initPanelA2({ chartDom, select, baseline, table, summary }) {
   });
   selEl.addEventListener('change', e => { curKey = e.target.value; renderChart(); highlightRow(); });
 
-  BASELINES.forEach(b => {
+  getBaselines().forEach(b => {
     const o = document.createElement('option'); o.value = b.id; o.textContent = b.label;
     if (b.id === curBase) o.selected = true;
     baseEl.appendChild(o);
@@ -39,32 +40,11 @@ export function initPanelA2({ chartDom, select, baseline, table, summary }) {
   baseEl.addEventListener('change', e => { curBase = e.target.value; renderChart(); renderTable(); });
 }
 
-/** 기준구간 레코드 (전체 timeseries 기준, 기간 필터와 무관) */
-function baselineRecords() {
-  const all = getTimeseries() || [];
-  const b = BASELINES.find(x => x.id === curBase) || BASELINES[0];
-  if (b.lastN) return all.slice(-b.lastN);
-  return all.filter(b.filter);
-}
+function baselineRecords() { return _baselineRecords(curBase); }
 
-/** 지표 하나의 통계 묶음 */
-export function statsFor(key) {
-  const base = baselineRecords();
-  const vals = base.map(r => r.native[key]);
-  const st = seriesStats(vals);
-  if (!st) return null;
-  const dc = dailyChangeStats(vals);
-  const cur = latestNativeWithDate(key);
-  const z = cur ? (cur.value - st.mean) / st.std : null;
-  return {
-    key, ...st, daily: dc, current: cur, z,
-    pct: cur ? percentileRank(vals, cur.value) : null,
-    status: z === null ? null : Math.abs(z) >= 2 ? 'extreme' : Math.abs(z) >= 1 ? 'watch' : 'normal',
-  };
-}
+/** 지표 하나의 통계 묶음 (현재 기준구간) */
+export function statsFor(key) { return _statsFor(key, curBase); }
 
-const STATUS_LABEL = { normal: '정상', watch: '주의', extreme: '이례적' };
-const STATUS_COLOR = { normal: '#3fb950', watch: '#d29922', extreme: '#f85149' };
 
 export function renderPanelA2(records) {
   _records = records || [];
@@ -98,7 +78,7 @@ function renderChart() {
     });
   }
 
-  const baseLabel = BASELINES.find(b => b.id === curBase)?.label || '';
+  const baseLabel = getBaselines().find(b => b.id === curBase)?.label || '';
   const markLine = st ? {
     symbol: 'none', silent: true,
     data: [

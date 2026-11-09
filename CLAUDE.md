@@ -36,7 +36,7 @@ Odin (사내 시스템)
   ├─ Notion MCP → scripts/parse_notion.js → raw/notion/                        (구)
   └─ Excel 파일  → scripts/parse_excel.js → raw/files/                          (구)
                               ↓
-                   data/timeseries.json   (1,520 records, 2021-01-04~2026-11-05 일별 spot, 6개년)
+                   data/timeseries.json   (2,041 records, 2019-01-02~2026-11-05 일별 spot, 8개년)
                    data/events.json       (34개 플래그, §5-1A)
                    data/prices_native.json (이벤트 시점별 스냅샷)
                               ↓
@@ -65,6 +65,7 @@ Odin (사내 시스템)
   `FRT_BALTIC` = Baltic VLGC 운임($/MT, 라스타누라→치바), `FRT_RIM` = RIM 운임.
 - `TTF`/`HH` 는 일별 가격표에 없음 → 2026-07-23 이전 구(Notion/Excel) 월 단위 참조값만 유지, 이후 null.
 - 모든 값은 **관측일 spot/근월 assessment** (CP 는 발표일부터 익월 CP 로 전환됨 = 원 파일 그대로).
+- 원 파일의 괄호 표기 `(37.630)` 은 음수 (2020-04-20 WTI −37.63). `REGIMES`(config.js)에 코로나/우크라이나/이란 국면 구간 정의.
 - `JKM_FEI_M2`는 data.js에서 43 영업일 lag로 자동 계산됨 (저장하지 않음).
 - Tier 1 = Odin 실측 / Tier 2 = 공개 참조 (옵셔널리티 판정에 사용 불가).
 
@@ -75,6 +76,8 @@ Odin (사내 시스템)
 | `js/data.js`   | JSON fetch, JKM_FEI_M2 lag 계산, 백분위·z-score, filterByDays |
 | `js/app.js`    | 초기화·이벤트 핸들러·패널 오케스트레이션 |
 | `js/panelA.js` | ECharts 시계열 (Tier1 수직선 실선, Tier2 점선, band markArea) |
+| `js/stats.js`  | 기준구간(Baseline) 동적 생성(전체/개전전/국면/연도/최근N), 지표별 통계(statsFor), 파생 시계열 위치, 국면 극값 |
+| `js/panelBrief.js` | A-1 "지금 시장 읽기": 규칙 기반 자동 해석문(국면 분류, 지표군별 z·백분위·역대 극값 대비, 스프레드 판정, 과거 극단기 비교표) |
 | `js/panelA2.js`| 지표별 Native 단위 Range·이상치 (기준구간 μ±1σ 밴드, ±2σ 선, P5/P95, 일간 스파이크 ◆, 전 지표 요약표) |
 | `js/glossary.js`| 지표 설명 정본(INDEX_DESC) + 마우스오버 툴팁(`data-tip-key`) · Panel A 범례/토글, A-2 표, D 표에 적용 |
 | `js/panelB.js` | Spread 시계열 + 평균±1σ 밴드 + 백분위 |

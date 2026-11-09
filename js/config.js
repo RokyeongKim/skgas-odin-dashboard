@@ -72,20 +72,12 @@ export const NATIVE_META = {
   FRT_RIM:      { label: 'Freight RIM',         unit: '$/ton',   group: '운임',  color: '#93c5fd', digits: 1 },
 };
 
-// Panel A-2 통계 기준구간 (lastN = 최근 N 영업일, filter = 날짜 조건)
-export const BASELINES = [
-  { id: 'all',     label: '전체기간 (2021-01~)',             filter: (r) => true },
-  { id: 'prewar',  label: '개전 전 (2021-01 ~ 2026-02-27)',  filter: (r) => r.date < '2026-02-28' },
-  { id: 'war',     label: '개전 후 (2026-03-02~)',           filter: (r) => r.date >= '2026-03-02' },
-  { id: 'y2026',   label: '2026년',                          filter: (r) => r.date.startsWith('2026') },
-  { id: 'y2025',   label: '2025년',                          filter: (r) => r.date.startsWith('2025') },
-  { id: 'y2024',   label: '2024년',                          filter: (r) => r.date.startsWith('2024') },
-  { id: 'y2023',   label: '2023년',                          filter: (r) => r.date.startsWith('2023') },
-  { id: 'y2022',   label: '2022년 (우크라이나 전쟁)',          filter: (r) => r.date.startsWith('2022') },
-  { id: 'y2021',   label: '2021년',                          filter: (r) => r.date.startsWith('2021') },
-  { id: 'last60',  label: '최근 60 영업일',                   lastN: 60 },
-  { id: 'last120', label: '최근 120 영업일',                  lastN: 120 },
-  { id: 'last250', label: '최근 250 영업일 (≈1년)',           lastN: 250 },
+// 역사적 국면(Regime) 정의 — 기준구간 선택지 및 Panel A-1 과거 극단기 비교에 사용
+//  kind: 'peak' = 구간 내 최고치를 대표값으로, 'trough' = 최저치를 대표값으로
+export const REGIMES = [
+  { id: 'covid',   label: '코로나 (2020-03 ~ 2020-12)',          from: '2020-03-01', to: '2020-12-31', kind: 'trough', short: '코로나 저점' },
+  { id: 'ukraine', label: '우크라이나 전쟁 (2022-02-24 ~ 2022-12-31)', from: '2022-02-24', to: '2022-12-31', kind: 'peak',   short: "'22 전쟁 고점" },
+  { id: 'iran',    label: '이란 전쟁 (2026-02-28 ~)',             from: '2026-02-28', to: '2099-12-31', kind: 'peak',   short: "'26 전쟁 고점" },
 ];
 
 export const EVENTS = [

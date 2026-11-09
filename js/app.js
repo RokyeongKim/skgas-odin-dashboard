@@ -4,6 +4,7 @@ import { loadAll, filterByDays, getEvents } from './data.js';
 import { INDEX_META, RELATIVE_PAIRS } from './config.js';
 import { initPanelA, renderPanelA, resizePanelA, toggleIndex } from './panelA.js';
 import { initPanelA2, renderPanelA2, resizePanelA2 } from './panelA2.js';
+import { initPanelBrief, renderPanelBrief } from './panelBrief.js';
 import { initPanelB, renderPanelB, resizePanelB, loadForwardData, getForwardMonths } from './panelB.js';
 import { initPanelC, renderPanelC, resizePanelC, togglePair } from './panelC.js';
 import { renderPanelD } from './panelD.js';
@@ -43,6 +44,10 @@ async function init() {
     baseline: document.getElementById('a2-baseline-select'),
     table:    document.getElementById('table-A2'),
     summary:  document.getElementById('a2-summary'),
+  });
+  initPanelBrief({
+    content: document.getElementById('brief-content'),
+    select:  document.getElementById('a1-baseline-select'),
   });
   initPanelB(document.getElementById('chart-B'));
   initPanelC(document.getElementById('chart-C'));
@@ -190,6 +195,7 @@ function renderCharts() {
 
 function renderAll(timeseries, pricesNative) {
   renderCharts();
+  renderPanelBrief();
   renderPanelD(pricesNative, document.getElementById('table-D'));
   renderPanelE(document.getElementById('optionality-cards'));
   renderPanelF(getEvents(), document.getElementById('panel-F-content'));
