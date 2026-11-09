@@ -85,7 +85,9 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 /* Panel A-1: 시장 읽기 */
 .brief-head { margin-bottom: 12px; }
 .brief-meta { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 8px; }
-.brief-head p { font-size: 0.86rem; line-height: 1.65; margin: 8px 0 0; }
+.brief-head p { font-size: 0.9rem; line-height: 1.75; margin: 8px 0 0; }
+.brief-detail { margin: 10px 0; }
+.brief-detail .brief-grid { margin-top: 8px; }
 .brief-regime {
   display: inline-block; padding: 8px 12px; border: 1px solid; border-radius: 6px;
   background: rgba(255,255,255,0.02); font-size: 0.9rem; max-width: 100%;

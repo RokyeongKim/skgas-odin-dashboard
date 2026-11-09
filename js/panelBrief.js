@@ -5,13 +5,22 @@
 //  ※ 규칙 기반 문장 생성이며 원인 해석(이벤트)은 Panel F 의 플래그를 참조
 
 import { NATIVE_META, CONVERSION, REGIMES } from './config.js';
-import { getTimeseries } from './data.js';
+import { getTimeseries, getEvents } from './data.js';
 import { getBaselines, baselineRecords, statsFor, seriesPosition, regimeExtreme, fmtNum, digitsOf, STATUS_LABEL, STATUS_COLOR } from './stats.js';
 
 let curBase = 'all';
 let contentEl = null, selEl = null;
 
 const CORE_KEYS = ['Brent', 'FEI', 'CP', 'MB', 'C2', 'ARA_C3', 'MOPJ', 'FO380', 'JKM', 'FRT_BALTIC'];
+// 서술문용 짧은 이름 / 카테고리어 / 언급 우선순위 (유가·LNG 같은 대표 지표를 먼저)
+const SHORT = { Brent: 'Brent', WTI: 'WTI', FEI: 'FEI C3', FEI_C4: 'FEI C4', CP: 'CP', CP_C4: 'CP C4', MB: 'MB 프로판', MB_nC4: 'MB 부탄', MB_iC4: 'MB iC4',
+  MB_nonTET_C3: 'MB non-TET', MB_nonTET_nC4: 'non-TET 부탄', MB_nonTET_iC4: 'non-TET iC4', C2: '에탄', ARA_C3: 'ARA C3', ARA_C4: 'ARA C4',
+  MOPJ: 'MOPJ', FO380: 'F/O 380', JKM: 'JKM', FRT_BALTIC: 'Baltic 운임', FRT_RIM: 'RIM 운임', TTF: 'TTF', HH: 'HH' };
+const CAT = { Brent: '유가', WTI: '유가', JKM: 'LNG', MOPJ: '납사', FEI: '아시아 LPG 현물', FEI_C4: '아시아 LPG 현물', CP: 'CP', MB: '미국 LPG', C2: '에탄',
+  ARA_C3: '유럽 LPG', FO380: '연료유', FRT_BALTIC: '운임', FRT_RIM: '운임' };
+const PRIORITY = ['Brent', 'JKM', 'FEI', 'MOPJ', 'CP', 'MB', 'FRT_BALTIC', 'ARA_C3', 'FO380', 'C2'];
+const byPriority = (a, b) => PRIORITY.indexOf(a.key) - PRIORITY.indexOf(b.key);
+const nd = k => Math.min(NATIVE_META[k].digits, NATIVE_META[k].unit === '$/mmbtu' ? 1 : (NATIVE_META[k].unit === '¢/gal' ? 1 : 0));
 const TABLE_KEYS = ['Brent', 'WTI', 'FEI', 'FEI_C4', 'CP', 'MB', 'MB_nC4', 'C2', 'ARA_C3', 'MOPJ', 'FO380', 'JKM', 'FRT_BALTIC'];
 
 export function initPanelBrief({ content, select }) {
@@ -125,17 +134,79 @@ export function renderPanelBrief() {
   const c4c3    = derivedPos(r => r.derived?.FEI_C4_C3 ?? null);
   const brentWti= derivedPos(r => (r.native.Brent !== null && r.native.WTI !== null && r.native.Brent !== undefined && r.native.WTI !== undefined) ? r.native.Brent - r.native.WTI : null);
 
-  // ── 1. 헤드라인 ──
-  const topTxt = top.map(s => `${NATIVE_META[s.key].label} ${z1(s.z)}`).join(', ');
-  const normTxt = norm.slice(0, 6).map(s => NATIVE_META[s.key].label).join(', ');
+  // ── 1. 짧은 서술문 (어떤 지표가 역사적으로 이례적인가 + 배경) ──
+  const lab = k => SHORT[k] || NATIVE_META[k].label;
+  const unit = k => NATIVE_META[k].unit;
+  const fv = (k, v) => fmtNum(v, nd(k));
+  const catWords = arr => [...new Set(arr.map(s => CAT[s.key] || lab(s.key)))].join('·');
+  const curRegime = [...REGIMES].reverse().find(g => g.kind === 'peak' && last.date >= g.from) || null;
+  const refRegime = REGIMES.find(g => g.kind === 'peak' && g !== curRegime && all.some(r => r.date >= g.from && r.date <= g.to)) || null;
+  const prevMax = k => {   // 현재 국면 이전(개전 전)의 역대 최고
+    let m = null;
+    all.forEach(r => { const v = r.native[k]; if (v === null || v === undefined) return; if (curRegime && r.date >= curRegime.from) return; if (!m || v > m.value) m = { value: v, date: r.date }; });
+    return m;
+  };
+  const core = CORE_KEYS.map(k => S[k]).filter(s => s && s.z !== null);
+  const extremes = core.filter(s => s.z >= 2 || (s.pct !== null && s.pct >= 99)).sort((a, b) => b.z - a.z);
+  const lows     = core.filter(s => s.z <= -2).sort((a, b) => a.z - b.z);
+  const watches  = core.filter(s => s.z >= 1 && s.z < 2 && !(s.pct >= 99)).sort(byPriority);
+  const normals  = core.filter(s => Math.abs(s.z) < 1);
+  const yearsAll = new Set(all.map(r => r.date.slice(0, 4))).size;
+
+  const paras = [];
+  // (a) 과거 고점 맥락 + 주의 수준 지표
+  if (refRegime) {
+    const refKeys = ['JKM', 'MOPJ', 'FEI', 'Brent'];
+    const refTxt = refKeys.map(k => { const e = regimeExtreme(k, refRegime); return e ? `${lab(k)} ${fv(k, e.value)}` : null; }).filter(Boolean).join(', ');
+    const wTxt = watches.slice(0, 2).map(s => `${lab(s.key)} ${fv(s.key, s.current.value)}`).join(', ');
+    const scope = curBase === 'all' ? `${yearsAll}개년 분포로 보면` : `"${baseLabel}" 분포를 기준으로 보면`;
+    paras.push(`${refRegime.label.replace(/ \(.*\)/, '')} 때 ${refTxt}까지 찍었기 때문에, ${scope} ` +
+      (wTxt ? `지금의 ${em(wTxt)}는 ${em('"주의" 수준', '#d29922')}이지 이례적이진 않습니다.` : `유가·LNG 등 대부분의 지표는 분포 안에 있습니다.`));
+  }
+  // (b) 이례적으로 높은 지표
+  if (extremes.length) {
+    const parts = extremes.slice(0, 4).map(s => {
+      const k = s.key, pm = prevMax(k), cur = s.current.value;
+      if (pm && cur > pm.value) return `${em(lab(k), NATIVE_META[k].color)} ${em(fv(k, cur))} ${unit(k)}은 ${curRegime ? '개전 전' : '과거'} 최고치 ${fv(k, pm.value)}(${pm.date})를 ${((cur / pm.value - 1) * 100).toFixed(0)}% 넘는 ${em('전례 없는 값', '#f85149')}`;
+      if (pm) return `${em(lab(k), NATIVE_META[k].color)} ${em(fv(k, cur))} ${unit(k)}도 과거 최고치 ${fv(k, pm.value)}(${pm.date})의 ${(cur / pm.value * 100).toFixed(0)}% 수준인 ${em(`상위 ${Math.max(1, 100 - s.pct)}% 구간`, '#f85149')}`;
+      return `${em(lab(k))} ${fv(k, cur)} ${unit(k)} (z ${z1(s.z)})`;
+    });
+    paras.push(`반면 ${parts.join('이고, ')}입니다.`);
+  }
+  if (lows.length) {
+    paras.push(`아래쪽으로는 ${lows.slice(0, 3).map(s => `${em(lab(s.key))} ${fv(s.key, s.current.value)} ${unit(s.key)} (z ${z1(s.z)})`).join(', ')}이 분포 하단 밖에 있습니다.`);
+  }
+  // (c) 한 줄 결론 (국면)
+  const extNames = extremes.slice(0, 3).map(s => lab(s.key)).join('·');
+  const normNames = normals.slice(0, 3).map(s => lab(s.key)).join('·');
+  if (extremes.length && watches.length)
+    paras.push(`즉 이번 국면의 특이점은 "${catWords(watches.slice(0, 2))}가 비싸다"보다 ${em(`"${catWords(extremes.slice(0, 3))}이 역사적 극단"`, regime.color)}이라는 데 있습니다. (국면 판정: ${em(regime.name, regime.color)})`);
+  else if (extremes.length)
+    paras.push(`즉 ${em(`${catWords(extremes.slice(0, 3))}이 역사적 극단`, regime.color)}이고${normNames ? `, ${normNames}는 평시 범위입니다` : '입니다'}. (국면 판정: ${em(regime.name, regime.color)})`);
+  else
+    paras.push(`현재 핵심 지표는 모두 기준구간 ±2σ 안에 있습니다. (국면 판정: ${em(regime.name, regime.color)})`);
+  // (d) 배경: 스프레드 구조 + 현재 국면 이벤트
+  const why = [];
+  if (feiCp?.pct >= 90 && feiAra?.pct >= 90) why.push(`중동 계약가(FEI−CP ${fmtNum(feiCp.current.value, 0)} $/t, P${feiCp.pct})와 유럽(FEI−ARA ${fmtNum(feiAra.current.value, 0)} $/t, P${feiAra.pct}) 대비 아시아 현물 프리미엄이 동시에 역대 상위라, 물량이 아시아로 제때 못 들어오는 ${em('물류 제약')}이 가격에 반영된 형태`);
+  else if (feiCp?.pct >= 90) why.push(`중동 계약가 대비 현물 프리미엄(FEI−CP ${fmtNum(feiCp.current.value, 0)} $/t)이 역대 상위(P${feiCp.pct})`);
+  else if (feiAra?.pct >= 90) why.push(`유럽 대비 아시아 프리미엄(FEI−ARA ${fmtNum(feiAra.current.value, 0)} $/t)이 역대 상위(P${feiAra.pct})`);
+  const evs = (getEvents() || []).filter(e => e.tier === 1 && curRegime && e.date >= curRegime.from && e.date <= last.date).sort((a, b) => a.date.localeCompare(b.date));
+  if (evs.length) {
+    const arch = {}; evs.forEach(e => { if (e.archetype) arch[e.archetype] = (arch[e.archetype] || 0) + 1; });
+    const domArch = Object.entries(arch).sort((a, b) => b[1] - a[1]).map(x => x[0]).slice(0, 2).join('·');
+    const first = evs[0], recent = evs.slice(-2).filter(e => e !== first);
+    why.push(`${em(first.label)}(${first.date}) 이후 ${recent.map(e => `${e.label}(${e.date.slice(5).replace('-', '/')})`).join(', ')} 등 ${em(domArch + ' 이벤트', '#f0a500')}가 이어진 결과`);
+  }
+  if (why.length) paras.push(`배경은 ${why.join('이며, ')}입니다. (이벤트 상세: Panel F)`);
+  // (e) 팁
+  if (refRegime) paras.push(`<span style="color:#8b949e">대시보드에서 기준구간을 "${refRegime.label}"으로 놓으면 당시와 지금을 지표별로 직접 비교할 수 있습니다.</span>`);
+
   let html = `<div class="brief-head">
-    <div class="brief-meta">기준일 ${em(last.date)} · 통계 기준구간 ${em(baseLabel)} (${years}개년, ${base.length.toLocaleString()} 관측일) · 전체 데이터 ${all[0].date} ~ ${last.date}</div>
-    <div class="brief-regime" style="border-color:${regime.color}"><span class="brief-regime-tag" style="background:${regime.color}">현재 국면</span> <b style="color:${regime.color}">${regime.name}</b><div class="brief-regime-why">${regime.why}</div></div>
-    <p>${withZ.length}개 지표 중 ${em(ext.length + '개 이례적', '#f85149')}(|z|≥2), ${em(watch.length + '개 주의', '#d29922')}, ${em(norm.length + '개 평시 범위', '#3fb950')}.
-      가장 크게 벗어난 지표는 ${em(topTxt)}${normTxt ? `, 반대로 ${normTxt}${norm.length > 6 ? ' 등' : ''}은 평시 범위 안입니다` : ''}.</p>
+    <div class="brief-meta">기준일 ${em(last.date)} · 통계 기준구간 ${em(baseLabel)} (${years}개년, ${base.length.toLocaleString()} 관측일) · 전체 데이터 ${all[0].date} ~ ${last.date} · 핵심 ${core.length}개 지표 중 ${em(extremes.length + '개 이례적', '#f85149')} / ${em(watches.length + '개 주의', '#d29922')} / ${em(normals.length + '개 평시', '#3fb950')}</div>
+    ${paras.map(t => `<p>${t}</p>`).join('')}
   </div>`;
 
-  // ── 2. 지표군별 해석 ──
+  // ── 2. 지표군별 상세 (접힘) ──
   const groups = [];
   groups.push({ title: '유가 (Brent · WTI)', color: '#ff6b6b', lines: [
     keyLine('Brent', S.Brent), keyLine('WTI', S.WTI, { withExtreme: false }),
@@ -174,15 +245,15 @@ export function renderPanelBrief() {
     keyLine('FO380', S.FO380), keyLine('FRT_BALTIC', S.FRT_BALTIC), keyLine('FRT_RIM', S.FRT_RIM, { withExtreme: false }),
   ]});
 
-  html += `<div class="brief-grid">` + groups.map(g => `
+  html += `<details class="brief-guide brief-detail"><summary>지표군별 상세 보기 (z·백분위·스프레드 판정)</summary><div class="brief-grid">` + groups.map(g => `
     <div class="brief-card" style="border-top-color:${g.color}">
       <div class="brief-card-title" style="color:${g.color}">${g.title}</div>
       <ul>${g.lines.filter(Boolean).map(l => `<li>${l}</li>`).join('')}</ul>
-    </div>`).join('') + `</div>`;
+    </div>`).join('') + `</div></details>`;
 
   // ── 3. 과거 극단기 비교표 ──
   const regimes = REGIMES.filter(g => all.some(r => r.date >= g.from && r.date <= g.to));
-  html += `<div class="brief-table-wrap"><div class="brief-sub">과거 극단기 vs 현재 (각 국면 구간 내 ${REGIMES.some(g=>g.kind==='trough') ? '저점/고점' : '고점'} · 전체기간 최고·최저)</div>
+  html += `<details class="brief-guide brief-detail" open><summary>과거 극단기 vs 현재 비교표</summary><div class="brief-table-wrap"><div class="brief-sub">과거 극단기 vs 현재 (각 국면 구간 내 ${REGIMES.some(g=>g.kind==='trough') ? '저점/고점' : '고점'} · 전체기간 최고·최저)</div>
     <table class="price-table range-table"><thead><tr><th>지표</th><th>현재 (${last.date})</th>${regimes.map(g => `<th>${g.short}</th>`).join('')}<th>전체 최고</th><th>전체 최저</th><th>현재/전체최고</th></tr></thead><tbody>`;
   TABLE_KEYS.forEach(k => {
     const m = NATIVE_META[k], d = m.digits;
@@ -200,7 +271,7 @@ export function renderPanelBrief() {
       <td>${all_st?.minRec ? `${fmtNum(all_st.minRec.value, d)}<br><small class="val-neutral">${all_st.minRec.date}</small>` : '—'}</td>
       <td style="color:${rc};font-weight:600">${ratio === null ? '—' : ratio.toFixed(0) + '%'}${ratio !== null && ratio >= 100 ? ' ★' : ''}</td></tr>`;
   });
-  html += `</tbody></table></div>`;
+  html += `</tbody></table></div></details>`;
 
   // ── 4. 읽는 법 ──
   html += `<details class="brief-guide"><summary>이 해석을 읽는 법</summary>
