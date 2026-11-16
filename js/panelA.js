@@ -8,6 +8,7 @@ import { descHtml } from './glossary.js';
 let chart = null;
 let visibleSet = new Set(Object.entries(INDEX_META).filter(([, m]) => m.defaultOn !== false).map(([k]) => k));
 let _events = [];
+let _evDate = {};   // event.id → 차트상 표시 거래일
 let _handlerBound = false;
 
 export function initPanelA(dom) {
@@ -20,6 +21,15 @@ export function renderPanelA(records) {
   _events = getEvents() || [];
   const dates  = records.map(r => r.date);
   const dateSet = new Set(dates);
+  // 이벤트 날짜가 주말·휴일이면 가장 가까운 거래일(같거나 이후, 없으면 직전)에 붙인다
+  const nearestDate = d => {
+    if (dateSet.has(d)) return d;
+    if (d < dates[0] || d > dates[dates.length - 1]) return null;
+    const after = dates.find(x => x > d);
+    return after || dates[dates.length - 1];
+  };
+  _evDate = {};
+  _events.forEach(ev => { _evDate[ev.id] = nearestDate(ev.date); });
 
   const series = Object.entries(INDEX_META).map(([key, meta]) => ({
     name: meta.label,
@@ -32,12 +42,12 @@ export function renderPanelA(records) {
 
   // 이벤트 vertical lines (Tier1=진하게, Tier2=옅게)
   const markLineData = _events
-    .filter(ev => !ev.is_band && dateSet.has(ev.date))
+    .filter(ev => !ev.is_band && _evDate[ev.id])
     .map(ev => {
       const isTier2 = ev.tier === 2;
       return [
         {
-          xAxis: ev.date,
+          xAxis: _evDate[ev.id],
           name: ev.id,
           lineStyle: {
             color: isTier2 ? '#555' : ev.color,
@@ -46,14 +56,14 @@ export function renderPanelA(records) {
           },
           label: { show: false },
         },
-        { xAxis: ev.date, name: ev.id },
+        { xAxis: _evDate[ev.id], name: ev.id },
       ];
     });
 
   // 클릭 가능한 flag markPoint (상단 고정) — Tier1 전부 + flag:true 로 표시 지정한 Tier2(과거 JKM 급등 배경 등)
-  const tier1Events = _events.filter(ev => !ev.is_band && dateSet.has(ev.date) && (ev.tier === 1 || ev.flag === true));
+  const tier1Events = _events.filter(ev => !ev.is_band && _evDate[ev.id] && (ev.tier === 1 || ev.flag === true));
   const flagPoints = tier1Events.map((ev, i) => ({
-    coord: [ev.date, 'max'],
+    coord: [_evDate[ev.id], 'max'],
     name: ev.id,
     value: ev.label,
     symbol: 'pin',
@@ -113,13 +123,20 @@ export function renderPanelA(records) {
       formatter: params => {
         const date = params[0]?.axisValue;
         let html = `<div style="font-size:11px;line-height:1.5">`;
-        // 해당 날짜의 이벤트(플래그·밴드 시작일) 전체 이름 + 배경을 가격 위에 표시
-        const dayEvents = _events.filter(ev => ev.date === date);
+        // 마우스 위치(픽셀) 기준 핀 폭 안에 드는 이벤트를 모두 표시 — 축이 빽빽해도 핀 위에서 설명이 뜨도록
+        const px = chart.convertToPixel({ xAxisIndex: 0 }, date);
+        const dayEvents = _events
+          .filter(ev => _evDate[ev.id])
+          .map(ev => ({ ev, dist: Math.abs(chart.convertToPixel({ xAxisIndex: 0 }, _evDate[ev.id]) - px) }))
+          .filter(x => x.dist <= 14)
+          .sort((a, b) => a.dist - b.dist)
+          .slice(0, 4)
+          .map(x => x.ev);
         if (dayEvents.length) {
           dayEvents.forEach(ev => {
             html += `<div style="margin-bottom:6px;padding:6px 8px;border-left:3px solid ${ev.color};background:rgba(255,255,255,0.04);border-radius:3px">
               <div style="font-weight:700;color:${ev.color};font-size:12px">📍 ${ev.label}</div>
-              <div style="color:#8b949e;font-size:10px">${ev.date} · ${ev.archetype || ''}${ev.tier === 2 ? ' · Tier 2 (공개 참조)' : ' · Tier 1 (Odin)'}</div>
+              <div style="color:#8b949e;font-size:10px">${ev.date}${ev.date !== date ? ` (표시일 ${_evDate[ev.id]})` : ''} · ${ev.archetype || ''}${ev.tier === 2 ? ' · Tier 2 (공개 참조)' : ' · Tier 1 (Odin)'}</div>
               ${ev.note ? `<div style="color:#c9d1d9;margin-top:3px">${ev.note}</div>` : ''}
             </div>`;
           });
