@@ -64,7 +64,7 @@ export function renderPanelA(records) {
       show: true,
       position: 'top',
       distance: 4,
-      formatter: () => ev.label.length > 14 ? ev.label.slice(0, 14) + '…' : ev.label,
+      formatter: () => ev.label.length > 18 ? ev.label.slice(0, 18) + '…' : ev.label,
       color: ev.color,
       fontSize: 9.5,
       fontWeight: 600,
@@ -108,10 +108,25 @@ export function renderPanelA(records) {
     tooltip: {
       trigger: 'axis',
       axisPointer: { type: 'cross', lineStyle: { color: '#444' } },
+      confine: true,
+      extraCssText: 'max-width:420px;white-space:normal;',
       formatter: params => {
-        let html = `<div style="font-size:11px"><b>${params[0]?.axisValue}</b>`;
+        const date = params[0]?.axisValue;
+        let html = `<div style="font-size:11px;line-height:1.5">`;
+        // 해당 날짜의 이벤트(플래그·밴드 시작일) 전체 이름 + 배경을 가격 위에 표시
+        const dayEvents = _events.filter(ev => ev.date === date);
+        if (dayEvents.length) {
+          dayEvents.forEach(ev => {
+            html += `<div style="margin-bottom:6px;padding:6px 8px;border-left:3px solid ${ev.color};background:rgba(255,255,255,0.04);border-radius:3px">
+              <div style="font-weight:700;color:${ev.color};font-size:12px">📍 ${ev.label}</div>
+              <div style="color:#8b949e;font-size:10px">${ev.date} · ${ev.archetype || ''}${ev.tier === 2 ? ' · Tier 2 (공개 참조)' : ' · Tier 1 (Odin)'}</div>
+              ${ev.note ? `<div style="color:#c9d1d9;margin-top:3px">${ev.note}</div>` : ''}
+            </div>`;
+          });
+        }
+        html += `<b>${date}</b>`;
         params.forEach(p => {
-          if (p.data !== null && p.data !== undefined) {
+          if (p.seriesType === 'line' && p.data !== null && p.data !== undefined) {
             html += `<br/><span style="color:${p.color}">●</span> ${p.seriesName}: <b>$${Number(p.data).toFixed(2)}</b>`;
           }
         });
