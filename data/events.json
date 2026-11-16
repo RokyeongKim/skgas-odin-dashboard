@@ -1,10 +1,174 @@
 [
   {
+    "id": "abqaiq_attack",
+    "date": "2019-09-16",
+    "label": "사우디 아브카이크 피격 (Brent +15%, 중동 LPG 공급 차질)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "color": "#ff8844",
+    "type": "war",
+    "flag": true,
+    "note": "9/14 드론 공격으로 사우디 원유 처리능력 절반(570만 b/d) 일시 중단. 아람코 LPG 공급도 차질 → FEI 340→447 $/t(+31%)로 LPG가 더 크게 반응. JKM은 6.2로 소폭 상승 — 당시 LNG는 신규 설비(미국·호주) 증설로 공급과잉기여서 유가·중동 이벤트에 둔감했음."
+  },
+  {
+    "id": "covid_pandemic",
+    "date": "2020-03-11",
+    "label": "WHO 팬데믹 선언 — 수요 붕괴 (JKM 1.8 사상 최저, WTI 마이너스)",
+    "archetype": "수요파괴형",
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
+    "tier": 2,
+    "color": "#58a6ff",
+    "type": "demand",
+    "flag": true,
+    "note": "전 세계 봉쇄로 에너지 수요 동시 급감. 4/20 WTI −37.6 $/bbl, 4/28 JKM 1.83 $/mmbtu(데이터 최저), 3/23 FEI 187 $/t. 모든 지표가 분포 하단으로 밀린 \"2020년형\" 국면의 기준점."
+  },
+  {
+    "id": "asia_coldsnap_2021",
+    "date": "2021-01-13",
+    "label": "동북아 한파 + LNG 공급차질 (JKM 32.5, 당시 사상 최고)",
+    "archetype": "유통재배치형",
+    "channels": [
+      "lng"
+    ],
+    "tier": 2,
+    "color": "#f0a500",
+    "type": "weather",
+    "flag": true,
+    "note": "1월 일본·한국·중국 동시 한파로 발전용 LNG 수요 급증. 파나마 운하 적체(미국→아시아 항해 지연), 호주·카타르·노르웨이 액화설비 트러블, LNG선 용선료 폭등(35만 $/일)이 겹쳐 2주 만에 JKM 6→32.5. FEI는 오히려 −6%: LPG는 재고·대체공급(미국)이 있어 한파 충격을 흡수. \"LNG spot은 저장·대체가 안 돼 단기 수급 쇼크가 가격에 그대로 실린다\"는 전형 사례."
+  },
+  {
+    "id": "eu_gas_crisis_2021",
+    "date": "2021-10-06",
+    "label": "유럽 가스위기 정점 (TTF 급등, JKM 56.3)",
+    "archetype": "공급차단형",
+    "channels": [
+      "lng",
+      "brent"
+    ],
+    "tier": 2,
+    "color": "#ff4444",
+    "type": "supply",
+    "flag": true,
+    "note": "유럽 가스 재고가 역대 최저 수준에서 겨울 진입. 러시아(가즈프롬) 추가 공급 거부·Nord Stream 2 승인 지연, 중국 석탄 부족에 따른 LNG 구매 경쟁, 풍력 발전 부진이 겹침. 아시아 구매자가 유럽과 카고를 놓고 경쟁하면서 JKM이 TTF에 연동해 급등. FEI +28%·MB +29%로 LPG도 올랐지만 LNG의 1/7 수준."
+  },
+  {
+    "id": "ttf_record_2021",
+    "date": "2021-12-21",
+    "label": "TTF 사상 최고(€180) — 야말 파이프라인 역류 (JKM 44.3)",
+    "archetype": "공급차단형",
+    "channels": [
+      "lng"
+    ],
+    "tier": 2,
+    "color": "#ff4444",
+    "type": "supply",
+    "flag": true,
+    "note": "12/21 야말-유럽 파이프라인이 독일→폴란드 역방향 송출로 전환되며 러시아 공급 중단 우려 극대화. 유럽 TTF €180/MWh 사상 최고 → JKM 44. 이후 미국 LNG 카고의 유럽 대량 유입으로 연말 급락."
+  },
+  {
+    "id": "ukraine_invasion",
+    "date": "2022-02-24",
+    "label": "러시아 우크라이나 침공 (JKM 84.8 사상 최고 3/7)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
+    "tier": 2,
+    "color": "#ff0000",
+    "type": "war",
+    "flag": true,
+    "note": "유럽 파이프라인 가스(러시아 비중 40%)의 공급 중단 리스크가 현실화. 유럽이 대체 LNG를 전량 spot에서 확보하려 하면서 JKM이 2주 만에 +204%(84.8 $/mmbtu, 데이터 최고). Brent 128, MOPJ 1,166, FEI 1,033도 동반 최고 — 유가·가스·LPG가 모두 분포 밖으로 나간 \"2022년형(에너지 전반 급등)\" 국면."
+  },
+  {
+    "id": "freeport_fire",
+    "date": "2022-06-08",
+    "label": "미국 Freeport LNG 화재 (미국 수출 17% 중단)",
+    "archetype": "공급차단형",
+    "channels": [
+      "lng"
+    ],
+    "tier": 2,
+    "color": "#ff8844",
+    "type": "supply",
+    "flag": true,
+    "note": "미국 2위 수출터미널 Freeport 폭발·화재로 약 8개월 가동 중단(연 1,500만 톤). 유럽행 미국 카고가 줄며 TTF·JKM 재상승의 출발점. 같은 기간 Nord Stream 1 감축(6/14 40%→7월 20%)과 겹침."
+  },
+  {
+    "id": "ns1_shutdown",
+    "date": "2022-08-31",
+    "label": "Nord Stream 1 무기한 공급 중단 (JKM 71.3, 8월 유럽 재고 확보 경쟁)",
+    "archetype": "공급차단형",
+    "channels": [
+      "lng"
+    ],
+    "tier": 2,
+    "color": "#ff4444",
+    "type": "supply",
+    "flag": true,
+    "note": "가즈프롬이 터빈 정비를 이유로 NS1 공급을 무기한 중단(9/26 해저 폭파로 영구화). 유럽이 겨울 재고 90% 목표를 채우기 위해 가격 불문 LNG 매입 → 8월 TTF €340 사상 최고, JKM 71. 이 시기 FEI·MB·Brent는 오히려 −9~−13%: 경기 둔화로 석유·LPG는 내리는데 가스만 올라 \"가스 고유 쇼크\"임이 분명했던 구간."
+  },
+  {
+    "id": "winter_2022",
+    "date": "2022-12-08",
+    "label": "유럽·동북아 동시 한파 + EU 가스 가격상한 논의 (JKM 40.4)",
+    "archetype": "공급차단형",
+    "channels": [
+      "lng"
+    ],
+    "tier": 2,
+    "color": "#ff8844",
+    "type": "weather",
+    "flag": true,
+    "note": "12월 초 유럽 한파로 재고 인출 가속, 아시아도 한파 진입. 이후 온난한 겨울·재고 여유 확인으로 1월 급락. 고점 40 → 2023-06 10 이하."
+  },
+  {
+    "id": "israel_hamas_2023",
+    "date": "2023-10-09",
+    "label": "이스라엘-하마스 전쟁 + Tamar 가스전 중단 + 호주 Chevron LNG 파업 (JKM 19.1)",
+    "archetype": "공급차단형",
+    "channels": [
+      "lng",
+      "brent"
+    ],
+    "tier": 2,
+    "color": "#ff4444",
+    "type": "war",
+    "flag": true,
+    "note": "10/7 하마스 공격 직후 이스라엘이 Tamar 가스전 가동 중단(이집트 LNG 수출 차질). 같은 주 호주 Chevron Gorgon·Wheatstone(세계 LNG 7%) 노조 파업 재개, 10/8 핀란드-에스토니아 Balticconnector 파손이 겹쳐 JKM 13→19(+48%). FEI는 0%, CP 0%: LPG 공급과 무관한 \"가스 전용\" 이벤트. Brent +8%."
+  },
+  {
+    "id": "red_sea_2023",
+    "date": "2023-12-18",
+    "label": "홍해 후티 선박 공격 → 선사 수에즈 우회 (JKM 반응 미미)",
+    "archetype": "유통재배치형",
+    "channels": [
+      "lng",
+      "lpg"
+    ],
+    "tier": 2,
+    "color": "#d29922",
+    "type": "logistics",
+    "flag": true,
+    "note": "12/15~18 머스크·BP 등 홍해 운항 중단, 카타르 LNG선 희망봉 우회(아시아행 +10일). 그러나 유럽 재고 90%+·온난 겨울로 JKM은 12월 −10%(15.8→12). 물류 차질이 있어도 재고가 넉넉하면 spot 가격은 안 오른다는 반례. MB +12%는 미국 겨울 수요 요인."
+  },
+  {
     "id": "ru_transit_end",
     "date": "2025-01-01",
     "label": "러시아 對우크라이나 가스 transit 종료",
     "archetype": "공급차단형",
-    "channels": ["lng"],
+    "channels": [
+      "lng"
+    ],
     "tier": 2,
     "color": "#ff6b35",
     "type": "policy",
@@ -15,7 +179,9 @@
     "date": "2025-01-10",
     "label": "美 대러 에너지 제재 (Gazprom Neft·Surgutneftegaz + 유조선 183척)",
     "archetype": "유통재배치형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 2,
     "color": "#ff6b35",
     "type": "sanction",
@@ -26,18 +192,38 @@
     "date": "2025-02-10",
     "label": "중국, 미국산 LNG 15% 보복관세 → 대중 수출 사실상 중단",
     "archetype": "유통재배치형",
-    "channels": ["lng"],
+    "channels": [
+      "lng"
+    ],
     "tier": 2,
     "color": "#ffaa00",
     "type": "tariff",
     "note": "HH 무반응 예상 (미국 내수 지표), JKM 지역별 프리미엄 분화"
   },
   {
+    "id": "eu_coldsnap_2025",
+    "date": "2025-02-10",
+    "label": "유럽 한파·재고 급감 + 우크라 transit 종료 후유증 (TTF 2년 최고, JKM 17.1)",
+    "archetype": "공급차단형",
+    "channels": [
+      "lng"
+    ],
+    "tier": 2,
+    "color": "#ff8844",
+    "type": "weather",
+    "flag": true,
+    "note": "1/1 러시아→우크라이나 경유 가스 종료 뒤 유럽 재고가 전년 대비 20%p 낮은 수준으로 인출. 2월 초 한파·무풍으로 TTF €58(2년 최고) → 아시아가 카고를 뺏기지 않으려 JKM 17.1까지 상승. FEI 0%·CP 0%: 역시 가스 전용 쇼크. 이후 EU 재고의무 완화 논의로 3월 급락."
+  },
+  {
     "id": "liberation_day",
     "date": "2025-04-02",
     "label": "상호관세(Liberation Day) 발표",
     "archetype": "수요파괴형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 2,
     "color": "#ff4444",
     "type": "tariff",
@@ -48,7 +234,9 @@
     "date": "2025-04-03",
     "label": "OPEC+ 5월 411kb/d 서프라이즈 증산",
     "archetype": "수요파괴형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 2,
     "color": "#ff6b35",
     "type": "supply",
@@ -59,7 +247,9 @@
     "date": "2025-04-04",
     "label": "중국 34% 보복관세 (프로판 포함)",
     "archetype": "유통재배치형",
-    "channels": ["lpg"],
+    "channels": [
+      "lpg"
+    ],
     "tier": 2,
     "color": "#ffaa00",
     "type": "tariff",
@@ -71,7 +261,9 @@
     "end_date": "2025-05-13",
     "label": "중국 관세 125% 격상 → 면세 사재기 구간",
     "archetype": "정책마감형",
-    "channels": ["lpg"],
+    "channels": [
+      "lpg"
+    ],
     "tier": 2,
     "color": "#ffdd44",
     "type": "tariff",
@@ -83,7 +275,9 @@
     "date": "2025-05-12",
     "label": "미중 제네바 관세 휴전 (중국 LPG 10% 유지)",
     "archetype": "정책마감형",
-    "channels": ["lpg"],
+    "channels": [
+      "lpg"
+    ],
     "tier": 2,
     "color": "#44ff88",
     "type": "policy",
@@ -94,7 +288,9 @@
     "date": "2025-05-13",
     "label": "대중국 면세 도착 마감일 → 물량 급감 전환점",
     "archetype": "정책마감형",
-    "channels": ["lpg"],
+    "channels": [
+      "lpg"
+    ],
     "tier": 2,
     "color": "#ffaa00",
     "type": "policy",
@@ -105,7 +301,11 @@
     "date": "2025-06-13",
     "label": "이스라엘, 이란 공습 개시 (1차 이란전)",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 2,
     "color": "#ff4444",
     "type": "war",
@@ -116,7 +316,11 @@
     "date": "2025-06-22",
     "label": "미국 Fordow 타격",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 2,
     "color": "#ff4444",
     "type": "war",
@@ -127,7 +331,11 @@
     "date": "2025-06-24",
     "label": "휴전 → 가스가격 약 20% 급락",
     "archetype": "수요파괴형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 2,
     "color": "#44ff88",
     "type": "ceasefire",
@@ -138,7 +346,9 @@
     "date": "2025-08-12",
     "label": "미중 관세 유예 연장",
     "archetype": "유통재배치형",
-    "channels": ["lpg"],
+    "channels": [
+      "lpg"
+    ],
     "tier": 2,
     "color": "#44ff88",
     "type": "policy",
@@ -149,7 +359,9 @@
     "date": "2025-10-10",
     "label": "가자 휴전 → 홍해 리스크 완화",
     "archetype": "유통재배치형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 2,
     "color": "#44ff88",
     "type": "ceasefire",
@@ -160,7 +372,9 @@
     "date": "2025-10-22",
     "label": "Rosneft·Lukoil SDN 지정 (발표)",
     "archetype": "유통재배치형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 2,
     "color": "#ff6b35",
     "type": "sanction",
@@ -171,7 +385,9 @@
     "date": "2025-11-02",
     "label": "OPEC+ 1Q26 증산 중단 결정",
     "archetype": "공급차단형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 2,
     "color": "#ff8844",
     "type": "supply",
@@ -182,7 +398,9 @@
     "date": "2025-11-21",
     "label": "Rosneft·Lukoil 제재 발효",
     "archetype": "유통재배치형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 2,
     "color": "#ff6b35",
     "type": "sanction",
@@ -194,7 +412,9 @@
     "end_date": "2025-12-31",
     "label": "공급과잉 확인, Brent 4년 최저 (구간 flag)",
     "archetype": "수요파괴형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 2,
     "color": "#ff4444",
     "type": "macro",
@@ -206,7 +426,9 @@
     "date": "2026-01-03",
     "label": "베네수엘라 마두로 체포",
     "archetype": "유통재배치형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 1,
     "color": "#ff8844",
     "type": "geopolitics",
@@ -217,7 +439,11 @@
     "date": "2026-02-28",
     "label": "개전 (미·이스라엘 대이란 공습)",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
@@ -228,7 +454,11 @@
     "date": "2026-03-02",
     "label": "IRGC 호르무즈 폐쇄 + Ras Laffan 타격",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
@@ -239,7 +469,11 @@
     "date": "2026-03-19",
     "label": "美 호르무즈 재개통 항공작전 + Ras Laffan 추가 피격",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff6b35",
     "type": "war",
@@ -250,7 +484,11 @@
     "date": "2026-04-08",
     "label": "1차 휴전 (2주, 파키스탄 중재)",
     "archetype": "수요파괴형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#44ff88",
     "type": "ceasefire",
@@ -261,7 +499,11 @@
     "date": "2026-04-13",
     "label": "이슬라마바드 회담 결렬 → 美 해군 봉쇄",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff4444",
     "type": "war",
@@ -272,7 +514,11 @@
     "date": "2026-04-18",
     "label": "이란 호르무즈 재폐쇄",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
@@ -283,7 +529,11 @@
     "date": "2026-06-12",
     "label": "MOU 프레임워크 뉴스화 (Pakistan 발표)",
     "archetype": "수요파괴형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ffdd44",
     "type": "mou",
@@ -294,7 +544,11 @@
     "date": "2026-06-17",
     "label": "MOU 서명 (Versailles/Tehran)",
     "archetype": "수요파괴형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ffdd44",
     "type": "mou",
@@ -305,7 +559,9 @@
     "date": "2026-06-22",
     "label": "Qatar 피해 규모 확인 (복구 최대 5년)",
     "archetype": "공급차단형",
-    "channels": ["lng"],
+    "channels": [
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff6b35",
     "type": "supply",
@@ -316,7 +572,11 @@
     "date": "2026-07-08",
     "label": "Trump 'MOU 종료' 시사 (재격화 시작)",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff8844",
     "type": "escalation",
@@ -327,7 +587,11 @@
     "date": "2026-07-11",
     "label": "호르무즈 봉쇄 (IRGC)",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
@@ -338,7 +602,11 @@
     "date": "2026-07-15",
     "label": "봉쇄 복원",
     "archetype": "수요파괴형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#44ff88",
     "type": "ceasefire",
@@ -349,7 +617,9 @@
     "date": "2026-07-17",
     "label": "요르단 美 기지 피격",
     "archetype": "공급차단형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 1,
     "color": "#ff6b35",
     "type": "war",
@@ -360,7 +630,11 @@
     "date": "2026-07-18",
     "label": "이란 MOU 이행 중단 선언 (전면전 재격화)",
     "archetype": "공급차단형",
-    "channels": ["brent", "lpg", "lng"],
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
@@ -371,7 +645,9 @@
     "date": "2026-07-21",
     "label": "후티, 사우디 선박 금수 선언 (Bab el-Mandeb)",
     "archetype": "유통재배치형",
-    "channels": ["brent"],
+    "channels": [
+      "brent"
+    ],
     "tier": 1,
     "color": "#ff8844",
     "type": "war",

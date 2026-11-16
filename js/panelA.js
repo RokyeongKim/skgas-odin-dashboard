@@ -50,16 +50,16 @@ export function renderPanelA(records) {
       ];
     });
 
-  // 클릭 가능한 flag markPoint (상단 고정) — Tier1만 표시
-  const tier1Events = _events.filter(ev => !ev.is_band && dateSet.has(ev.date) && ev.tier === 1);
+  // 클릭 가능한 flag markPoint (상단 고정) — Tier1 전부 + flag:true 로 표시 지정한 Tier2(과거 JKM 급등 배경 등)
+  const tier1Events = _events.filter(ev => !ev.is_band && dateSet.has(ev.date) && (ev.tier === 1 || ev.flag === true));
   const flagPoints = tier1Events.map((ev, i) => ({
     coord: [ev.date, 'max'],
     name: ev.id,
     value: ev.label,
     symbol: 'pin',
-    symbolSize: [26, 32],
+    symbolSize: ev.tier === 1 ? [26, 32] : [20, 26],
     symbolOffset: [0, i % 2 === 0 ? -6 : -30], // 라벨 겹침 완화용 세로 stagger
-    itemStyle: { color: ev.color, borderColor: '#fff', borderWidth: 1 },
+    itemStyle: { color: ev.color, borderColor: ev.tier === 1 ? '#fff' : '#8b949e', borderWidth: 1, opacity: ev.tier === 1 ? 1 : 0.85 },
     label: {
       show: true,
       position: 'top',
@@ -73,9 +73,9 @@ export function renderPanelA(records) {
       borderRadius: 3,
     },
     tooltip: {
-      formatter: () => `<div style="max-width:260px;font-size:11px">
+      formatter: () => `<div style="max-width:340px;font-size:11px;white-space:normal">
         <b style="color:${ev.color}">${ev.label}</b><br/>
-        <span style="color:#8b949e">${ev.date}</span><br/>
+        <span style="color:#8b949e">${ev.date}${ev.tier === 2 ? ' · Tier 2 (공개 참조)' : ''}</span><br/>
         <span style="color:#c9d1d9">${ev.note || ''}</span><br/>
         <span style="color:#00d4ff;font-size:10px">▶ 클릭 → Panel F 상세보기</span>
       </div>`,
