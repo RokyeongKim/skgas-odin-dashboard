@@ -85,6 +85,11 @@ Odin (사내 시스템)
 | `js/panelD.js` | Native 단위 가격 표 (이벤트 컬럼 × Index 행) |
 | `js/panelE.js` | 옵셔널리티 엔진 (CV/NV/FEI_MOPJ/JKM 자동 판정 카드) |
 | `js/panelF.js` | Factor Library 테이블 (34개 플래그, archetype별 반응 패턴) |
+| `js/panelLearn.js` | **탭 2 "Index 이해"**: G-1 변동성(로그수익률 σ, 단위 착시 제거) · G-2 상관 히트맵(1/20영업일 + FEI×CP 월간) · G-3 상대가 이력(10개 RELS, μ±1σ/P5~P95) · G-4 대체재 카드(일간/20일/수준 상관 실측) · G-5 이벤트 반응표(t−10 → t+15 영업일 극값). 탭 첫 진입 시 1회 계산, 기간 필터 무관 |
+
+### 탭 구조 (index.html)
+- `.main-tabs` 네비 → `#tab-live`(1. 실시간 Index: Panel A~F) / `#tab-learn`(2. Index 이해: G-0~G-5). `.tab-pane.active` 만 grid 로 표시.
+- 탭 전환은 app.js 에서 처리: learn 진입 시 `renderLearnTab()`, live 복귀 시 기존 패널 resize. `[data-horizon]` 버튼은 `btn-horizon` 클래스(`btn-period` 와 분리 — 기간 핸들러가 잡지 않도록).
 
 ### KB 정본 환산계수 (`js/config.js` CONVERSION 객체)
 - LPG 1 ton = 47.84 mmbtu = 8.2 bbl (Brent equiv)

@@ -27,7 +27,14 @@
     </div>
   </header>
 
+  <nav class="main-tabs">
+    <button class="main-tab active" data-pane="tab-live">1. 실시간 Index</button>
+    <button class="main-tab" data-pane="tab-learn">2. Index 이해</button>
+    <span class="main-tabs-hint" id="main-tabs-hint">실시간 지표 · 해석 · Range · 스프레드 · 옵셔널리티</span>
+  </nav>
+
   <main class="dashboard">
+  <div class="tab-pane active" id="tab-live">
     <!-- Panel A: Index 시계열 -->
     <section class="panel panel-A">
       <div class="panel-header">
@@ -126,6 +133,81 @@
       </div>
       <div id="panel-F-content"></div>
     </section>
+  </div><!-- /tab-live -->
+
+  <!-- ═══════════ 2. Index 이해 ═══════════ -->
+  <div class="tab-pane" id="tab-learn">
+    <section class="panel panel-G0">
+      <div class="panel-note learn-intro">
+        이 탭은 <b>지표 자체를 이해</b>하기 위한 자료입니다. 모든 숫자는 Odin 일별 데이터(2019~현재)에서 페이지를 열 때 계산되며, 상단 기간 필터의 영향을 받지 않습니다.
+        순서: ① 변동성(단위 착시 제거) → ② 연계 지표 상관관계 → ③ 상대가 이력 → ④ 대체재 지도 → ⑤ 왜 JKM 만 크게 움직이나.
+      </div>
+    </section>
+
+    <section class="panel panel-G1">
+      <div class="panel-header"><h2>G-1. 단위 착시를 걷어낸 변동성 비교</h2></div>
+      <div class="panel-note">JKM 은 $/mmbtu, FEI 는 $/톤이라 "JKM 이 30 → 60 으로 2배" 와 "FEI 가 600 → 700" 을 숫자 크기로 비교하면 착시가 생깁니다. 그래서 가격 수준이 아니라 <b>매일의 변화율(로그수익률)</b>의 표준편차로 비교했습니다.</div>
+      <div class="chart-wrap" id="chart-G1"></div>
+      <div id="summary-G1" class="learn-summary"></div>
+      <div id="table-G1"></div>
+    </section>
+
+    <section class="panel panel-G2">
+      <div class="panel-header">
+        <h2>G-2. 연계 지표 상관관계</h2>
+        <div class="a2-controls">
+          <span class="val-neutral" style="font-size:.78rem">수익률 기간</span>
+          <button class="btn-horizon active" data-horizon="1">1 영업일</button>
+          <button class="btn-horizon" data-horizon="20">20 영업일</button>
+        </div>
+      </div>
+      <div class="panel-note">빨강에 가까울수록 같이 움직이고(상관 1), 어두울수록 따로 움직입니다(0 근처). 파랑은 역방향. 수익률 기간을 20영업일로 바꾸면 월 단위로 발표되는 CP 같은 지표의 진짜 연결이 드러납니다.</div>
+      <div class="chart-wrap" id="chart-G2"></div>
+      <div id="summary-G2" class="learn-summary"></div>
+      <div id="table-G2"></div>
+    </section>
+
+    <section class="panel panel-G3">
+      <div class="panel-header">
+        <h2>G-3. 상대가(스프레드·비율)는 어떻게 움직여 왔나</h2>
+        <div class="a2-controls"><label>상대가 <select id="rel-select"></select></label></div>
+      </div>
+      <div class="panel-note">상대가는 두 지표의 "관계" 이므로 절대가격보다 훨씬 좁은 범위에 머무릅니다. 그 범위(μ±1σ, P5~P95)를 벗어난 구간이 곧 옵셔널리티가 열리는 구간입니다. 표의 행을 클릭하면 차트가 바뀝니다.</div>
+      <div class="chart-wrap" id="chart-G3"></div>
+      <div id="table-G3"></div>
+    </section>
+
+    <section class="panel panel-G4">
+      <div class="panel-header"><h2>G-4. 대체재 지도 — 무엇이 무엇을 대체하고, 실제로 같이 움직이나</h2></div>
+      <div id="summary-G4" class="learn-summary"></div>
+      <div id="cards-G4"></div>
+    </section>
+
+    <section class="panel panel-G5">
+      <div class="panel-header"><h2>G-5. 왜 JKM 만 유독 크게 움직이나 — 이벤트별 실측 반응</h2></div>
+      <div class="learn-text">
+        <p><b>결론부터:</b> JKM 변동폭이 큰 것은 단위 때문이 아닙니다. G-1 처럼 변화율로 바꿔도 JKM 의 변동성은 다른 지표의 2배 이상입니다. 이유는 <b>"대체재·완충재가 없는 시장"</b> 이기 때문입니다.</p>
+        <ul>
+          <li><b>① 저장이 안 된다.</b> LNG 는 −162℃ 를 유지해야 하고 탱크가 작아 재고로 충격을 흡수하지 못합니다. LPG 는 상온 가압으로 대형 저장이 가능하고, 원유는 전략비축·탱크팜·해상 재고가 있습니다. 재고가 없으면 수급 불일치가 바로 가격이 됩니다.</li>
+          <li><b>② 현물 시장이 얇다.</b> LNG 거래의 대부분이 유가연동 장기계약이고, JKM 이 반영하는 현물은 전체의 일부입니다. 소수 카고로 가격이 결정되므로 한파·설비 사고 한 건이 수십 % 를 움직입니다.</li>
+          <li><b>③ 수요 측 대체가 느리다.</b> 발전·도시가스는 연료를 바꾸려면 설비를 바꿔야 합니다. 반면 LPG 는 석화 크래커가 납사와 즉시 교체(FEI/MOPJ 85~90% 밸브)하고, 미국산 카고가 아시아·유럽 사이를 운임에 따라 옮겨 다닙니다(FEI↔MB·ARA 밸브). 이 두 밸브가 FEI 의 상·하단을 묶습니다.</li>
+          <li><b>④ 공급 측 스윙이 없다.</b> LPG 는 미국 셰일 NGL 이 "언제든 더 나올 수 있는" 스윙 공급원이고, 원유는 OPEC+ 가 생산을 조절합니다. LNG 는 액화 설비가 풀가동이라 가격이 올라도 단기 증산이 불가능합니다.</li>
+          <li><b>⑤ 유럽과 연결되어 있다.</b> JKM 은 TTF(유럽)와 카고를 두고 경쟁하므로 러시아 가스 차단 같은 유럽 사건이 아시아 가격으로 직접 전이됩니다. FEI 에는 그런 경로가 없습니다.</li>
+        </ul>
+        <p><b>다른 지표가 그만큼 움직이지 않는 이유</b></p>
+        <ul>
+          <li><b>FEI·MB·ARA</b>: 위의 두 밸브(납사 교체, 지역 차익거래)가 작동. 중동 공급 자체가 막힌 2019 아브카이크·2026 호르무즈 때만 밸브가 닫혀 JKM 수준으로 뛰었습니다.</li>
+          <li><b>CP</b>: 아람코가 월 1회 정하는 계약가. 현물을 한 달 늦게 평균해서 따라가므로 일간 변동이 0 이고, 극단값이 자연히 깎입니다.</li>
+          <li><b>Brent</b>: 세계에서 가장 깊고 유동성 높은 시장. 재고·OPEC+·금융 헤지가 충격을 분산합니다. 2020 코로나(WTI 마이너스)가 예외적 사례.</li>
+          <li><b>HH</b>: 미국 내수 가스. 수출 설비(LNG 터미널)가 병목이라 해외 가격이 아무리 뛰어도 미국 안에 갇힌 가스 가격은 따라가지 못합니다. 2022 년 TTF 가 10배 뛸 때 HH 는 2~3배에 그친 이유.</li>
+          <li><b>TTF</b>: JKM 과 가장 비슷하게 움직이는 지표이지만 유럽은 대형 지하 저장(연 수요의 약 25%)이 있어 겨울 외 충격은 저장이 흡수합니다. 2022 년처럼 저장이 비어 있을 때만 JKM 과 함께 폭주합니다.</li>
+        </ul>
+        <p class="val-neutral" style="font-size:.76rem">HH·TTF 는 Odin 일별 가격표에 없어 수치 비교에서 제외했습니다(2026-07 이전 월 단위 참조값만 보유). 아래 표의 나머지 지표는 전부 Odin 실측입니다.</p>
+      </div>
+      <div id="summary-G5" class="learn-summary"></div>
+      <div id="table-G5"></div>
+    </section>
+  </div><!-- /tab-learn -->
   </main>
 
   <footer class="footer">

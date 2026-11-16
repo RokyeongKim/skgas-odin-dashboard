@@ -11,6 +11,7 @@ import { renderPanelD } from './panelD.js';
 import { renderPanelE } from './panelE.js';
 import { renderPanelF } from './panelF.js';
 import { initTooltips } from './glossary.js';
+import { renderLearnTab, resizeLearn, setCorrHorizon } from './panelLearn.js';
 
 let currentDays = 365;
 let currentMonth = '2026-12';
@@ -149,9 +150,32 @@ async function init() {
   // 초기 상대가 토글 구성
   buildRelToggles(currentRelTab);
 
+  // 메인 탭 (1. 실시간 Index / 2. Index 이해)
+  const HINTS = { 'tab-live': '실시간 지표 · 해석 · Range · 스프레드 · 옵셔널리티', 'tab-learn': '변동성 · 상관관계 · 상대가 이력 · 대체재 · 왜 JKM 인가 (기간 필터 무관)' };
+  document.querySelectorAll('.main-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelector('.main-tab.active')?.classList.remove('active');
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === btn.dataset.pane));
+      const hint = document.getElementById('main-tabs-hint'); if (hint) hint.textContent = HINTS[btn.dataset.pane] || '';
+      document.querySelector('.period-filters')?.classList.toggle('dimmed', btn.dataset.pane === 'tab-learn');
+      if (btn.dataset.pane === 'tab-learn') { renderLearnTab(); }
+      else { resizePanelA(); resizePanelA2(); resizePanelB(); resizePanelC(); }
+      window.scrollTo({ top: 0 });
+    });
+  });
+  // G-2 상관 수익률 기간 토글
+  document.querySelectorAll('[data-horizon]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-horizon]').forEach(b => b.classList.toggle('active', b === btn));
+      setCorrHorizon(Number(btn.dataset.horizon));
+    });
+  });
+
   // Resize handler
   window.addEventListener('resize', () => {
-    resizePanelA(); resizePanelA2(); resizePanelB(); resizePanelC();
+    if (document.getElementById('tab-learn')?.classList.contains('active')) resizeLearn();
+    else { resizePanelA(); resizePanelA2(); resizePanelB(); resizePanelC(); }
   });
 }
 
