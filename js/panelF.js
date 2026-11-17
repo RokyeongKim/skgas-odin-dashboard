@@ -13,7 +13,9 @@ const CHANNEL_LABELS = {
   lng:   { label: 'LNG',   color: '#4ade80' },
 };
 
-let currentFilter = { archetype: 'all', tier: 'all', channel: 'all' };
+let currentFilter = { archetype: 'all', tier: 'all', channel: 'all', level: 'all' };
+const LEVEL_LABEL = { 1: 'Lv1 주요', 2: 'Lv2 중간', 3: 'Lv3 세부' };
+const LEVEL_COLOR = { 1: '#f85149', 2: '#d29922', 3: '#8b949e' };
 let allEvents = [];
 
 function renderBadge(text, color) {
@@ -35,11 +37,12 @@ function buildRow(ev) {
     : ev.date;
 
   return `
-    <tr class="ev-row ${tier1 ? 'tier1' : 'tier2'}" data-id="${ev.id}" data-archetype="${ev.archetype}" data-tier="${ev.tier}" data-channels="${(ev.channels || []).join(',')}">
+    <tr class="ev-row ${tier1 ? 'tier1' : 'tier2'}" data-id="${ev.id}" data-archetype="${ev.archetype}" data-tier="${ev.tier}" data-level="${ev.level || (tier1 ? 1 : 2)}" data-channels="${(ev.channels || []).join(',')}">
       <td class="col-date">${dateStr}${ev.is_band ? '<span class="band-tag">구간</span>' : ''}</td>
       <td class="col-label">
         <span style="color:${ev.color}">●</span> ${ev.label}
-        ${tier1 ? '' : '<span class="tier2-tag">Tier2</span>'}
+        ${renderBadge(LEVEL_LABEL[ev.level || (tier1 ? 1 : 2)], LEVEL_COLOR[ev.level || (tier1 ? 1 : 2)])}
+        ${tier1 ? '' : (ev.source === 'web' ? '<span class="tier2-tag">공개뉴스</span>' : '<span class="tier2-tag">Tier2</span>')}
       </td>
       <td class="col-arch">
         <span style="color:${arch.color}" title="${arch.desc}">${arch.icon} ${ev.archetype}</span>
@@ -113,7 +116,8 @@ function applyFilter() {
     const fArch = currentFilter.archetype === 'all' || arch === currentFilter.archetype;
     const fTier = currentFilter.tier === 'all' || tier === currentFilter.tier;
     const fCh   = currentFilter.channel === 'all' || chs.includes(currentFilter.channel);
-    const show  = fArch && fTier && fCh;
+    const fLv   = currentFilter.level === 'all' || Number(row.dataset.level) <= Number(currentFilter.level);
+    const show  = fArch && fTier && fCh && fLv;
     row.style.display = show ? '' : 'none';
     const detailRow = document.getElementById(`detail-${row.dataset.id}`);
     if (detailRow) detailRow.style.display = 'none';
@@ -153,6 +157,14 @@ export function renderPanelF(events, container) {
           <option value="2">Tier 2 (참조)</option>
         </select>
       </div>
+      <div class="filter-group">
+        <label>중요도</label>
+        <select id="f-level">
+          <option value="all">전체</option>
+          <option value="1">Lv1 주요만</option>
+          <option value="2">Lv1+2</option>
+        </select>
+      </div>
       <span id="ev-count" class="ev-count">${events.length}개 표시 중</span>
     </div>
     <div class="table-wrap-f">
@@ -174,9 +186,9 @@ export function renderPanelF(events, container) {
   `;
 
   // Filter change handlers
-  ['f-arch', 'f-channel', 'f-tier'].forEach(id => {
+  ['f-arch', 'f-channel', 'f-tier', 'f-level'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', e => {
-      const key = id === 'f-arch' ? 'archetype' : id === 'f-channel' ? 'channel' : 'tier';
+      const key = id === 'f-arch' ? 'archetype' : id === 'f-channel' ? 'channel' : id === 'f-level' ? 'level' : 'tier';
       currentFilter[key] = e.target.value;
       applyFilter();
     });
@@ -199,8 +211,8 @@ export function renderPanelF(events, container) {
 /** Panel A의 플래그 클릭 시 호출 — 필터 초기화 후 해당 이벤트 상세 열기 + 스크롤 */
 export function openEventInPanelF(eventId) {
   // 필터 리셋 (숨겨진 이벤트일 수 있으므로)
-  currentFilter = { archetype: 'all', tier: 'all', channel: 'all' };
-  ['f-arch', 'f-channel', 'f-tier'].forEach(id => {
+  currentFilter = { archetype: 'all', tier: 'all', channel: 'all', level: 'all' };
+  ['f-arch', 'f-channel', 'f-tier', 'f-level'].forEach(id => {
     const sel = document.getElementById(id);
     if (sel) sel.value = 'all';
   });

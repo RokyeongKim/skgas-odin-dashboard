@@ -36,8 +36,8 @@ Odin (사내 시스템)
   ├─ Notion MCP → scripts/parse_notion.js → raw/notion/                        (구)
   └─ Excel 파일  → scripts/parse_excel.js → raw/files/                          (구)
                               ↓
-                   data/timeseries.json   (2,041 records, 2019-01-02~2026-11-05 일별 spot, 8개년)
-                   data/events.json       (34개 플래그, §5-1A)
+                   data/timeseries.json   (2,048 records, 2019-01-02~2026-11-16 일별 spot, 8개년)
+                   data/events.json       (70개 플래그: 원본 34 + JKM 배경 12 + 2026 H2 공개뉴스 24, level 1~3)
                    data/prices_native.json (이벤트 시점별 스냅샷)
                               ↓
                    index.html + js/*.js   (ECharts CDN, no build)
@@ -124,6 +124,12 @@ Odin (사내 시스템)
 ```
 - `is_band: true`이면 `end_date`까지 음영 구간으로 표시.
 - archetype 4종: 수요파괴형 / 공급차단형 / 유통재배치형 / 정책마감형
+- 추가 필드: `flag: true` = Tier 2 라도 Panel A 에 핀 표시, `level` = 플래그 상세도(1 주요 전환점 / 2 중간 뉴스 / 3 세부),
+  `source: 'web'` = 공개 뉴스 기반(2026-07-23 이후 이벤트, `scripts/add_events_2026h2.py` 로 생성; note 끝에 출처 매체·날짜).
+- **플래그 상세도 (Panel A)**: 자동 모드는 기간 연동 — 1Y 이상 Lv1 / 6M Lv1+2 / 3M·1M Lv1+2+3. Lv3 에서는 panelA.js 가 Odin 데이터에서
+  ⚡급변일(Brent·FEI·MB ±4%, JKM ±7%, 운임 ±6%, 뉴스 플래그 ±1거래일 밖)을 자동 감지해 다이아몬드로 표시(뉴스 미확인 표기).
+  헤더 셀렉터(`#flag-level-select`)로 수동 고정 가능. Panel F 에도 중요도 필터(`#f-level`) 있음.
+- 이벤트 추가 후 `python3 scripts/parse_odin_tsv.py` 재실행 → prices_native.json 스냅샷 갱신 (Panel D 컬럼은 panelD.js EVENT_COLUMNS 에 수동 등록).
 
 ## GitHub Pages (Private)
 - repo: `RokyeongKim/skgas-odin-dashboard` (private)

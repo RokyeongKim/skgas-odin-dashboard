@@ -12,7 +12,8 @@
     "color": "#ff8844",
     "type": "war",
     "flag": true,
-    "note": "9/14 드론 공격으로 사우디 원유 처리능력 절반(570만 b/d) 일시 중단. 아람코 LPG 공급도 차질 → FEI 340→447 $/t(+31%)로 LPG가 더 크게 반응. JKM은 6.2로 소폭 상승 — 당시 LNG는 신규 설비(미국·호주) 증설로 공급과잉기여서 유가·중동 이벤트에 둔감했음."
+    "note": "9/14 드론 공격으로 사우디 원유 처리능력 절반(570만 b/d) 일시 중단. 아람코 LPG 공급도 차질 → FEI 340→447 $/t(+31%)로 LPG가 더 크게 반응. JKM은 6.2로 소폭 상승 — 당시 LNG는 신규 설비(미국·호주) 증설로 공급과잉기여서 유가·중동 이벤트에 둔감했음.",
+    "level": 1
   },
   {
     "id": "covid_pandemic",
@@ -28,7 +29,8 @@
     "color": "#58a6ff",
     "type": "demand",
     "flag": true,
-    "note": "전 세계 봉쇄로 에너지 수요 동시 급감. 4/20 WTI −37.6 $/bbl, 4/28 JKM 1.83 $/mmbtu(데이터 최저), 3/23 FEI 187 $/t. 모든 지표가 분포 하단으로 밀린 \"2020년형\" 국면의 기준점."
+    "note": "전 세계 봉쇄로 에너지 수요 동시 급감. 4/20 WTI −37.6 $/bbl, 4/28 JKM 1.83 $/mmbtu(데이터 최저), 3/23 FEI 187 $/t. 모든 지표가 분포 하단으로 밀린 \"2020년형\" 국면의 기준점.",
+    "level": 1
   },
   {
     "id": "asia_coldsnap_2021",
@@ -42,7 +44,8 @@
     "color": "#f0a500",
     "type": "weather",
     "flag": true,
-    "note": "1월 일본·한국·중국 동시 한파로 발전용 LNG 수요 급증. 파나마 운하 적체(미국→아시아 항해 지연), 호주·카타르·노르웨이 액화설비 트러블, LNG선 용선료 폭등(35만 $/일)이 겹쳐 2주 만에 JKM 6→32.5. FEI는 오히려 −6%: LPG는 재고·대체공급(미국)이 있어 한파 충격을 흡수. \"LNG spot은 저장·대체가 안 돼 단기 수급 쇼크가 가격에 그대로 실린다\"는 전형 사례."
+    "note": "1월 일본·한국·중국 동시 한파로 발전용 LNG 수요 급증. 파나마 운하 적체(미국→아시아 항해 지연), 호주·카타르·노르웨이 액화설비 트러블, LNG선 용선료 폭등(35만 $/일)이 겹쳐 2주 만에 JKM 6→32.5. FEI는 오히려 −6%: LPG는 재고·대체공급(미국)이 있어 한파 충격을 흡수. \"LNG spot은 저장·대체가 안 돼 단기 수급 쇼크가 가격에 그대로 실린다\"는 전형 사례.",
+    "level": 1
   },
   {
     "id": "eu_gas_crisis_2021",
@@ -57,7 +60,8 @@
     "color": "#ff4444",
     "type": "supply",
     "flag": true,
-    "note": "유럽 가스 재고가 역대 최저 수준에서 겨울 진입. 러시아(가즈프롬) 추가 공급 거부·Nord Stream 2 승인 지연, 중국 석탄 부족에 따른 LNG 구매 경쟁, 풍력 발전 부진이 겹침. 아시아 구매자가 유럽과 카고를 놓고 경쟁하면서 JKM이 TTF에 연동해 급등. FEI +28%·MB +29%로 LPG도 올랐지만 LNG의 1/7 수준."
+    "note": "유럽 가스 재고가 역대 최저 수준에서 겨울 진입. 러시아(가즈프롬) 추가 공급 거부·Nord Stream 2 승인 지연, 중국 석탄 부족에 따른 LNG 구매 경쟁, 풍력 발전 부진이 겹침. 아시아 구매자가 유럽과 카고를 놓고 경쟁하면서 JKM이 TTF에 연동해 급등. FEI +28%·MB +29%로 LPG도 올랐지만 LNG의 1/7 수준.",
+    "level": 1
   },
   {
     "id": "ttf_record_2021",
@@ -71,7 +75,8 @@
     "color": "#ff4444",
     "type": "supply",
     "flag": true,
-    "note": "12/21 야말-유럽 파이프라인이 독일→폴란드 역방향 송출로 전환되며 러시아 공급 중단 우려 극대화. 유럽 TTF €180/MWh 사상 최고 → JKM 44. 이후 미국 LNG 카고의 유럽 대량 유입으로 연말 급락."
+    "note": "12/21 야말-유럽 파이프라인이 독일→폴란드 역방향 송출로 전환되며 러시아 공급 중단 우려 극대화. 유럽 TTF €180/MWh 사상 최고 → JKM 44. 이후 미국 LNG 카고의 유럽 대량 유입으로 연말 급락.",
+    "level": 1
   },
   {
     "id": "ukraine_invasion",
@@ -87,7 +92,8 @@
     "color": "#ff0000",
     "type": "war",
     "flag": true,
-    "note": "유럽 파이프라인 가스(러시아 비중 40%)의 공급 중단 리스크가 현실화. 유럽이 대체 LNG를 전량 spot에서 확보하려 하면서 JKM이 2주 만에 +204%(84.8 $/mmbtu, 데이터 최고). Brent 128, MOPJ 1,166, FEI 1,033도 동반 최고 — 유가·가스·LPG가 모두 분포 밖으로 나간 \"2022년형(에너지 전반 급등)\" 국면."
+    "note": "유럽 파이프라인 가스(러시아 비중 40%)의 공급 중단 리스크가 현실화. 유럽이 대체 LNG를 전량 spot에서 확보하려 하면서 JKM이 2주 만에 +204%(84.8 $/mmbtu, 데이터 최고). Brent 128, MOPJ 1,166, FEI 1,033도 동반 최고 — 유가·가스·LPG가 모두 분포 밖으로 나간 \"2022년형(에너지 전반 급등)\" 국면.",
+    "level": 1
   },
   {
     "id": "freeport_fire",
@@ -101,7 +107,8 @@
     "color": "#ff8844",
     "type": "supply",
     "flag": true,
-    "note": "미국 2위 수출터미널 Freeport 폭발·화재로 약 8개월 가동 중단(연 1,500만 톤). 유럽행 미국 카고가 줄며 TTF·JKM 재상승의 출발점. 같은 기간 Nord Stream 1 감축(6/14 40%→7월 20%)과 겹침."
+    "note": "미국 2위 수출터미널 Freeport 폭발·화재로 약 8개월 가동 중단(연 1,500만 톤). 유럽행 미국 카고가 줄며 TTF·JKM 재상승의 출발점. 같은 기간 Nord Stream 1 감축(6/14 40%→7월 20%)과 겹침.",
+    "level": 1
   },
   {
     "id": "ns1_shutdown",
@@ -115,7 +122,8 @@
     "color": "#ff4444",
     "type": "supply",
     "flag": true,
-    "note": "가즈프롬이 터빈 정비를 이유로 NS1 공급을 무기한 중단(9/26 해저 폭파로 영구화). 유럽이 겨울 재고 90% 목표를 채우기 위해 가격 불문 LNG 매입 → 8월 TTF €340 사상 최고, JKM 71. 이 시기 FEI·MB·Brent는 오히려 −9~−13%: 경기 둔화로 석유·LPG는 내리는데 가스만 올라 \"가스 고유 쇼크\"임이 분명했던 구간."
+    "note": "가즈프롬이 터빈 정비를 이유로 NS1 공급을 무기한 중단(9/26 해저 폭파로 영구화). 유럽이 겨울 재고 90% 목표를 채우기 위해 가격 불문 LNG 매입 → 8월 TTF €340 사상 최고, JKM 71. 이 시기 FEI·MB·Brent는 오히려 −9~−13%: 경기 둔화로 석유·LPG는 내리는데 가스만 올라 \"가스 고유 쇼크\"임이 분명했던 구간.",
+    "level": 1
   },
   {
     "id": "winter_2022",
@@ -129,7 +137,8 @@
     "color": "#ff8844",
     "type": "weather",
     "flag": true,
-    "note": "12월 초 유럽 한파로 재고 인출 가속, 아시아도 한파 진입. 이후 온난한 겨울·재고 여유 확인으로 1월 급락. 고점 40 → 2023-06 10 이하."
+    "note": "12월 초 유럽 한파로 재고 인출 가속, 아시아도 한파 진입. 이후 온난한 겨울·재고 여유 확인으로 1월 급락. 고점 40 → 2023-06 10 이하.",
+    "level": 1
   },
   {
     "id": "israel_hamas_2023",
@@ -144,7 +153,8 @@
     "color": "#ff4444",
     "type": "war",
     "flag": true,
-    "note": "10/7 하마스 공격 직후 이스라엘이 Tamar 가스전 가동 중단(이집트 LNG 수출 차질). 같은 주 호주 Chevron Gorgon·Wheatstone(세계 LNG 7%) 노조 파업 재개, 10/8 핀란드-에스토니아 Balticconnector 파손이 겹쳐 JKM 13→19(+48%). FEI는 0%, CP 0%: LPG 공급과 무관한 \"가스 전용\" 이벤트. Brent +8%."
+    "note": "10/7 하마스 공격 직후 이스라엘이 Tamar 가스전 가동 중단(이집트 LNG 수출 차질). 같은 주 호주 Chevron Gorgon·Wheatstone(세계 LNG 7%) 노조 파업 재개, 10/8 핀란드-에스토니아 Balticconnector 파손이 겹쳐 JKM 13→19(+48%). FEI는 0%, CP 0%: LPG 공급과 무관한 \"가스 전용\" 이벤트. Brent +8%.",
+    "level": 1
   },
   {
     "id": "red_sea_2023",
@@ -159,7 +169,8 @@
     "color": "#d29922",
     "type": "logistics",
     "flag": true,
-    "note": "12/15~18 머스크·BP 등 홍해 운항 중단, 카타르 LNG선 희망봉 우회(아시아행 +10일). 그러나 유럽 재고 90%+·온난 겨울로 JKM은 12월 −10%(15.8→12). 물류 차질이 있어도 재고가 넉넉하면 spot 가격은 안 오른다는 반례. MB +12%는 미국 겨울 수요 요인."
+    "note": "12/15~18 머스크·BP 등 홍해 운항 중단, 카타르 LNG선 희망봉 우회(아시아행 +10일). 그러나 유럽 재고 90%+·온난 겨울로 JKM은 12월 −10%(15.8→12). 물류 차질이 있어도 재고가 넉넉하면 spot 가격은 안 오른다는 반례. MB +12%는 미국 겨울 수요 요인.",
+    "level": 1
   },
   {
     "id": "ru_transit_end",
@@ -172,7 +183,8 @@
     "tier": 2,
     "color": "#ff6b35",
     "type": "policy",
-    "note": "우크라이나 경유 파이프라인 종료 → 유럽 가스 공급 재편"
+    "note": "우크라이나 경유 파이프라인 종료 → 유럽 가스 공급 재편",
+    "level": 2
   },
   {
     "id": "us_russia_sanction",
@@ -185,7 +197,8 @@
     "tier": 2,
     "color": "#ff6b35",
     "type": "sanction",
-    "note": "유조선 183척 SDN 지정 → 러시아 원유 유통 재배치"
+    "note": "유조선 183척 SDN 지정 → 러시아 원유 유통 재배치",
+    "level": 2
   },
   {
     "id": "china_lng_tariff",
@@ -198,7 +211,8 @@
     "tier": 2,
     "color": "#ffaa00",
     "type": "tariff",
-    "note": "HH 무반응 예상 (미국 내수 지표), JKM 지역별 프리미엄 분화"
+    "note": "HH 무반응 예상 (미국 내수 지표), JKM 지역별 프리미엄 분화",
+    "level": 2
   },
   {
     "id": "eu_coldsnap_2025",
@@ -212,7 +226,8 @@
     "color": "#ff8844",
     "type": "weather",
     "flag": true,
-    "note": "1/1 러시아→우크라이나 경유 가스 종료 뒤 유럽 재고가 전년 대비 20%p 낮은 수준으로 인출. 2월 초 한파·무풍으로 TTF €58(2년 최고) → 아시아가 카고를 뺏기지 않으려 JKM 17.1까지 상승. FEI 0%·CP 0%: 역시 가스 전용 쇼크. 이후 EU 재고의무 완화 논의로 3월 급락."
+    "note": "1/1 러시아→우크라이나 경유 가스 종료 뒤 유럽 재고가 전년 대비 20%p 낮은 수준으로 인출. 2월 초 한파·무풍으로 TTF €58(2년 최고) → 아시아가 카고를 뺏기지 않으려 JKM 17.1까지 상승. FEI 0%·CP 0%: 역시 가스 전용 쇼크. 이후 EU 재고의무 완화 논의로 3월 급락.",
+    "level": 1
   },
   {
     "id": "liberation_day",
@@ -227,7 +242,8 @@
     "tier": 2,
     "color": "#ff4444",
     "type": "tariff",
-    "note": "글로벌 무역 수요 기대 삭감 → Brent 급락, FEI 후행 하락"
+    "note": "글로벌 무역 수요 기대 삭감 → Brent 급락, FEI 후행 하락",
+    "level": 2
   },
   {
     "id": "opec_surprise",
@@ -240,7 +256,8 @@
     "tier": 2,
     "color": "#ff6b35",
     "type": "supply",
-    "note": "Liberation Day 다음 날 OPEC+ 증산 → 유가 이중 압박"
+    "note": "Liberation Day 다음 날 OPEC+ 증산 → 유가 이중 압박",
+    "level": 2
   },
   {
     "id": "china_lpg_tariff",
@@ -253,7 +270,8 @@
     "tier": 2,
     "color": "#ffaa00",
     "type": "tariff",
-    "note": "US-origin 프로판 MB↓, ME-origin FEI 유지 → 비대칭 반응"
+    "note": "US-origin 프로판 MB↓, ME-origin FEI 유지 → 비대칭 반응",
+    "level": 2
   },
   {
     "id": "china_tariff_125",
@@ -268,7 +286,8 @@
     "color": "#ffdd44",
     "type": "tariff",
     "is_band": true,
-    "note": "2025-04-10 선적 마감 ~ 2025-05-13 도착 마감 = 면세 사재기 구간. 근월 백워데이션 급확대 후 붕괴. 걸프만 재고 전년비 -39%"
+    "note": "2025-04-10 선적 마감 ~ 2025-05-13 도착 마감 = 면세 사재기 구간. 근월 백워데이션 급확대 후 붕괴. 걸프만 재고 전년비 -39%",
+    "level": 2
   },
   {
     "id": "us_china_truce",
@@ -281,7 +300,8 @@
     "tier": 2,
     "color": "#44ff88",
     "type": "policy",
-    "note": "LPG 10% 잔존 → 완전한 관세 해소 아님"
+    "note": "LPG 10% 잔존 → 완전한 관세 해소 아님",
+    "level": 2
   },
   {
     "id": "china_duty_deadline",
@@ -294,7 +314,8 @@
     "tier": 2,
     "color": "#ffaa00",
     "type": "policy",
-    "note": "사재기 수요 소멸 → FEI/근월 급락 구간 진입"
+    "note": "사재기 수요 소멸 → FEI/근월 급락 구간 진입",
+    "level": 2
   },
   {
     "id": "iran_strike_1",
@@ -309,7 +330,8 @@
     "tier": 2,
     "color": "#ff4444",
     "type": "war",
-    "note": "호르무즈 리스크 프리미엄 즉각 반영 → Brent 급등"
+    "note": "호르무즈 리스크 프리미엄 즉각 반영 → Brent 급등",
+    "level": 2
   },
   {
     "id": "fordow_strike",
@@ -324,7 +346,8 @@
     "tier": 2,
     "color": "#ff4444",
     "type": "war",
-    "note": "핵시설 타격 → 분쟁 격화 신호"
+    "note": "핵시설 타격 → 분쟁 격화 신호",
+    "level": 2
   },
   {
     "id": "ceasefire_2025",
@@ -339,7 +362,8 @@
     "tier": 2,
     "color": "#44ff88",
     "type": "ceasefire",
-    "note": "전쟁 프리미엄 소멸 → JKM/TTF 20% 급락"
+    "note": "전쟁 프리미엄 소멸 → JKM/TTF 20% 급락",
+    "level": 2
   },
   {
     "id": "us_china_extend",
@@ -352,7 +376,8 @@
     "tier": 2,
     "color": "#44ff88",
     "type": "policy",
-    "note": "관세 불확실성 일시 해소"
+    "note": "관세 불확실성 일시 해소",
+    "level": 2
   },
   {
     "id": "gaza_ceasefire",
@@ -365,7 +390,8 @@
     "tier": 2,
     "color": "#44ff88",
     "type": "ceasefire",
-    "note": "Bab el-Mandeb 통항 정상화 → Brent 하락"
+    "note": "Bab el-Mandeb 통항 정상화 → Brent 하락",
+    "level": 2
   },
   {
     "id": "rosneft_sdn_ann",
@@ -378,7 +404,8 @@
     "tier": 2,
     "color": "#ff6b35",
     "type": "sanction",
-    "note": "발표 → 발효 간 1개월 시차 존재"
+    "note": "발표 → 발효 간 1개월 시차 존재",
+    "level": 2
   },
   {
     "id": "opec_pause",
@@ -391,7 +418,8 @@
     "tier": 2,
     "color": "#ff8844",
     "type": "supply",
-    "note": "증산 중단 → Brent 하락 억제"
+    "note": "증산 중단 → Brent 하락 억제",
+    "level": 2
   },
   {
     "id": "rosneft_sdn_eff",
@@ -404,7 +432,8 @@
     "tier": 2,
     "color": "#ff6b35",
     "type": "sanction",
-    "note": "실제 발효 → 러시아 원유 유통 재편 본격화"
+    "note": "실제 발효 → 러시아 원유 유통 재편 본격화",
+    "level": 2
   },
   {
     "id": "supply_glut",
@@ -419,7 +448,8 @@
     "color": "#ff4444",
     "type": "macro",
     "is_band": true,
-    "note": "구조적 공급과잉 확인 구간"
+    "note": "구조적 공급과잉 확인 구간",
+    "level": 2
   },
   {
     "id": "maduro_arrest",
@@ -432,7 +462,8 @@
     "tier": 1,
     "color": "#ff8844",
     "type": "geopolitics",
-    "note": "베네수엘라 원유 생산 불확실성 → 소폭 Brent 반응"
+    "note": "베네수엘라 원유 생산 불확실성 → 소폭 Brent 반응",
+    "level": 2
   },
   {
     "id": "war_start",
@@ -447,7 +478,8 @@
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
-    "note": "Brent 즉각 반응. FEI/LNG는 후행. 커브 전이도(③) 높음"
+    "note": "Brent 즉각 반응. FEI/LNG는 후행. 커브 전이도(③) 높음",
+    "level": 1
   },
   {
     "id": "hormuz_close_1",
@@ -462,7 +494,8 @@
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
-    "note": "Ras Laffan은 LNG 단독 flag 아님 — LPG·나프타·콘덴세이트 동시 생산. FEI·CP 직접 타격"
+    "note": "Ras Laffan은 LNG 단독 flag 아님 — LPG·나프타·콘덴세이트 동시 생산. FEI·CP 직접 타격",
+    "level": 1
   },
   {
     "id": "hormuz_reopen_1",
@@ -477,7 +510,8 @@
     "tier": 1,
     "color": "#ff6b35",
     "type": "war",
-    "note": "재개통 시도 + 추가 피격 복합 → 불확실성 지속"
+    "note": "재개통 시도 + 추가 피격 복합 → 불확실성 지속",
+    "level": 2
   },
   {
     "id": "ceasefire1",
@@ -492,7 +526,8 @@
     "tier": 1,
     "color": "#44ff88",
     "type": "ceasefire",
-    "note": "전쟁 프리미엄 일부 소멸"
+    "note": "전쟁 프리미엄 일부 소멸",
+    "level": 1
   },
   {
     "id": "talks_fail",
@@ -507,7 +542,8 @@
     "tier": 1,
     "color": "#ff4444",
     "type": "war",
-    "note": "휴전 실패 → 봉쇄 전환"
+    "note": "휴전 실패 → 봉쇄 전환",
+    "level": 2
   },
   {
     "id": "hormuz_close_2",
@@ -522,7 +558,8 @@
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
-    "note": "2차 폐쇄 → 공급 차단 구조화"
+    "note": "2차 폐쇄 → 공급 차단 구조화",
+    "level": 1
   },
   {
     "id": "mou_news",
@@ -537,7 +574,8 @@
     "tier": 1,
     "color": "#ffdd44",
     "type": "mou",
-    "note": "Index 반응 기점 후보 ① — 실제 시계열 변곡점으로 정렬 필요"
+    "note": "Index 반응 기점 후보 ① — 실제 시계열 변곡점으로 정렬 필요",
+    "level": 2
   },
   {
     "id": "mou_signed",
@@ -552,7 +590,8 @@
     "tier": 1,
     "color": "#ffdd44",
     "type": "mou",
-    "note": "Index 반응 기점 후보 ② — 언제 '시장이' 반응했는지가 기준"
+    "note": "Index 반응 기점 후보 ② — 언제 '시장이' 반응했는지가 기준",
+    "level": 1
   },
   {
     "id": "qatar_damage",
@@ -565,7 +604,8 @@
     "tier": 1,
     "color": "#ff6b35",
     "type": "supply",
-    "note": "LNG 구조적 공급 감소 — JKM 장기 프리미엄 반영"
+    "note": "LNG 구조적 공급 감소 — JKM 장기 프리미엄 반영",
+    "level": 2
   },
   {
     "id": "mou_end",
@@ -580,7 +620,8 @@
     "tier": 1,
     "color": "#ff8844",
     "type": "escalation",
-    "note": "근월만 반응 가능성 — 커브 전이도(③) 확인 필요"
+    "note": "근월만 반응 가능성 — 커브 전이도(③) 확인 필요",
+    "level": 1
   },
   {
     "id": "strait_close",
@@ -595,7 +636,8 @@
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
-    "note": "3차 봉쇄. 근월 스파이크 vs Cal27 하락 분리 관찰 필요"
+    "note": "3차 봉쇄. 근월 스파이크 vs Cal27 하락 분리 관찰 필요",
+    "level": 1
   },
   {
     "id": "strait_open",
@@ -610,7 +652,8 @@
     "tier": 1,
     "color": "#44ff88",
     "type": "ceasefire",
-    "note": "4일간 봉쇄 → 단기 스파이크 소멸형 가능성 높음"
+    "note": "4일간 봉쇄 → 단기 스파이크 소멸형 가능성 높음",
+    "level": 2
   },
   {
     "id": "iran_escalate",
@@ -623,7 +666,8 @@
     "tier": 1,
     "color": "#ff6b35",
     "type": "war",
-    "note": "미군 기지 피격 → 확전 리스크"
+    "note": "미군 기지 피격 → 확전 리스크",
+    "level": 2
   },
   {
     "id": "iran_mou_stop",
@@ -638,7 +682,8 @@
     "tier": 1,
     "color": "#ff0000",
     "type": "war",
-    "note": "Cal27 Brent 오히려 하락 — 근월만 올린 단기 스파이크형일 수 있음. 2026-02-28 개전과 커브 전이도 비교 필수"
+    "note": "Cal27 Brent 오히려 하락 — 근월만 올린 단기 스파이크형일 수 있음. 2026-02-28 개전과 커브 전이도 비교 필수",
+    "level": 2
   },
   {
     "id": "houthi_ban",
@@ -651,6 +696,462 @@
     "tier": 1,
     "color": "#ff8844",
     "type": "war",
-    "note": "홍해 통항 재차단 → 유럽향 LNG·원유 운임 상승"
+    "note": "홍해 통항 재차단 → 유럽향 LNG·원유 운임 상승",
+    "level": 2
+  },
+  {
+    "id": "brent_100_0723",
+    "date": "2026-07-23",
+    "end_date": null,
+    "label": "Brent $100 재돌파 — 후티 홍해 사우디 유조선 공격 + 트럼프 \"대규모 공격\" 위협",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 1,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "Brent 100.69 (5/26 이후 첫 100 상회, 전일比 +7%). FEI 809.5 로 동반 상승. 출처: CNBC 7/23."
+  },
+  {
+    "id": "strikes_pause_0727",
+    "date": "2026-07-27",
+    "end_date": null,
+    "label": "美·이란, 호르무즈 교전 일시 중지 → Brent −8.7%",
+    "archetype": "수요파괴형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 1,
+    "color": "#4ade80",
+    "type": "ceasefire",
+    "is_band": false,
+    "source": "web",
+    "note": "Brent 96.78→88.36, FEI −7.6%(717.5). 전면전 재격화(7/18) 열흘 만의 숨고르기. 출처: Euronews 7/27."
+  },
+  {
+    "id": "bessent_deal_0804",
+    "date": "2026-08-04",
+    "end_date": null,
+    "label": "베센트 \"호르무즈 합의 이번 주 가능\" → Brent 이틀간 −12%",
+    "archetype": "수요파괴형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 1,
+    "color": "#4ade80",
+    "type": "ceasefire",
+    "is_band": false,
+    "source": "web",
+    "note": "8/3 −7.0%, 8/4 −5.3% (79.36). 합의 불발 → 8/10 +5% 반등(87.72). 이후 \"합의 임박 발언 → 급락 → 불발 → 반등\" 패턴 반복의 시작. 출처: CNBC 8/4, 8/10."
+  },
+  {
+    "id": "deal_doubt_0810",
+    "date": "2026-08-10",
+    "end_date": null,
+    "label": "호르무즈 합의 불확실 → Brent +5% 반등 (87.72)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "이란 \"조건 충족 전 해협 개방 없다\". 8/11 WTI 83 상회. 출처: CNBC 8/10·8/11, Al Jazeera 8/10."
+  },
+  {
+    "id": "blockade_indef_0814",
+    "date": "2026-08-14",
+    "end_date": null,
+    "label": "美 \"이란 항만 해상봉쇄 무기한 지속\" → Brent 88.5",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "sanction",
+    "is_band": false,
+    "source": "web",
+    "note": "美 국무부, 이란 \"경제적 고립\" 위협. 출처: CNBC 8/14."
+  },
+  {
+    "id": "sanctions_0820",
+    "date": "2026-08-20",
+    "end_date": null,
+    "label": "베센트 \"경제 압박으로 이란 붕괴\" — 사상 최강 제재 패키지 → Brent 93.8",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "sanction",
+    "is_band": false,
+    "source": "web",
+    "note": "8/20 +2.4%(93.78). 8/24 제재 공식 발표 후 오히려 −2.5%(92.06) \"재료 소진\". 출처: CNBC 8/20·8/24."
+  },
+  {
+    "id": "kuwait_missile_0903",
+    "date": "2026-09-03",
+    "end_date": null,
+    "label": "이란, 쿠웨이트에 미사일 발사 — 걸프 교전 재개",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "Brent 95 근처. 8월 \"합의 기대\" 국면 종료. 출처: CNBC 9/3."
+  },
+  {
+    "id": "tanker_sink_0910",
+    "date": "2026-09-10",
+    "end_date": null,
+    "label": "美, 이란 유조선 5척 격침 → 걸프 교전 격화, Brent 107 (+6.3%)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 1,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "9/9 Brent 101(5월 이후 최고) → 9/10 107.63. 美 군함 공격 시도에 대한 보복. 골드만 \"Brent 120 상회 확률 상승\". FEI 895, JKM 28.8. 출처: CNBC 9/9."
+  },
+  {
+    "id": "hormuz_clearing_0914",
+    "date": "2026-09-14",
+    "end_date": null,
+    "label": "美 \"호르무즈 통항 정리 중\" 주장에도 Brent 107 유지 — 선박·사우디 인프라 공격 지속",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "전문가 \"통항은 여전히 극히 제한적\". 출처: Al Jazeera 9/14."
+  },
+  {
+    "id": "trump_reject_0928",
+    "date": "2026-09-28",
+    "end_date": null,
+    "label": "트럼프, 이란 \"7일 내 호르무즈 재개방\" 제안 거부 → Brent +3% (107)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "이란 측 제안: 7일 내 해협 재개방. 거부 후 10월 \"중간선거 후 공습\" 리스크 프리미엄 축적 시작. 출처: Al Jazeera 9/28."
+  },
+  {
+    "id": "houthi_saudi_1005",
+    "date": "2026-10-05",
+    "end_date": null,
+    "label": "후티, 2022년 이후 첫 사우디 본토 공격 — 리야드 동부 펌프장 피해로 원유 흐름 중단",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "사우디 연합군의 사나 공습에 대한 보복. 10/4 리야드 남부 아람코 시설 화재. 출처: ABC 10/4, The National."
+  },
+  {
+    "id": "tanker_hurricane_1008",
+    "date": "2026-10-08",
+    "end_date": null,
+    "label": "이란 유조선 공격 확대 + 美 걸프 허리케인 → Brent +4% (104.3), MB +5%",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "호르무즈 통과 950만 b/d(전쟁 전 대비 −30%, Kpler). 10/9 트럼프 \"중간선거 전 이란 공습 없다\" → 103.5. 출처: CNBC 10/8, Vantage 10/9."
+  },
+  {
+    "id": "houthi_aramco_1013",
+    "date": "2026-10-13",
+    "end_date": null,
+    "label": "후티, 아람코 시설 타격 (사우디 연합군 사나 유류시설 공습 수시간 후)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "후티 \"아람코 시설·공항 계속 공격\" 경고. 출처: Al Jazeera 10/13."
+  },
+  {
+    "id": "shaybah_1022",
+    "date": "2026-10-22",
+    "end_date": null,
+    "label": "샤이바 유전 인근 후티 드론 공격 → Brent $110 돌파 (113.2)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "FEI 968, JKM 30.8. 출처: The National 10/22."
+  },
+  {
+    "id": "brent_117_1023",
+    "date": "2026-10-23",
+    "end_date": null,
+    "label": "후티 사우디 연쇄 공격 + 이란 유조선 공격 → Brent 117 (4월 이후 최고)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 1,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "Brent 116.72 (6개월 최고). 10월 한 달 +10% 이상 — 시장이 \"중간선거 후 대규모 공습\" 을 선반영. 출처: The National 10/23, EnergyNow."
+  },
+  {
+    "id": "saudi_tehran_1026",
+    "date": "2026-10-26",
+    "end_date": null,
+    "label": "사우디 국방장관 테헤란 방문 (긴장 완화 모색) — Brent 115.8 로 소폭 하락",
+    "archetype": "수요파괴형",
+    "channels": [
+      "brent"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#4ade80",
+    "type": "ceasefire",
+    "is_band": false,
+    "source": "web",
+    "note": "메카 방위동맹(사우디·파키스탄·튀르키예) 중재 시도. 장중 117 터치 후 반락. 출처: CNBC 10/26·10/27."
+  },
+  {
+    "id": "houthi_refinery_1028",
+    "date": "2026-10-28",
+    "end_date": null,
+    "label": "후티, 라스타누라·라빅 정유시설 + 아브카이크 타격 주장 → Brent 115.5",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "사우디 미확인. 美, 사우디 내 비필수 정부인력 철수 명령. 출처: CNBC 10/28, OilPrice."
+  },
+  {
+    "id": "fei_record_1030",
+    "date": "2026-10-30",
+    "end_date": null,
+    "label": "후티 사우디 6건 동시 공격 주장 — FEI 1,113 (3월 고점 1,131 근접), JKM 34.1, Brent 117.6",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 1,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "12월물 만기일 겹침. FEI 는 3/19 전쟁 고점(1,131) 턱밑까지 복귀. 아시아 LPG 현물(FEI)·MB 동반 +6~7%: 중동 LPG 수출 전쟁 전 대비 절반 이하 상태에서 사우디 리스크까지 가세. 출처: Al Jazeera 10/30, Alupetra."
+  },
+  {
+    "id": "peace_draft_1102",
+    "date": "2026-11-02",
+    "end_date": null,
+    "label": "美·이란 종전 초안 회람 → Brent −7.6% (중간선거 전날)",
+    "archetype": "수요파괴형",
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 1,
+    "color": "#4ade80",
+    "type": "ceasefire",
+    "is_band": false,
+    "source": "web",
+    "note": "이란 협상단 카타르 출국 후 초안 유출. 동일 계약 기준 −7.6%(104.77), 12→1월물 롤 포함 시 −11%. FEI 1,107 로 유가와 달리 아직 미반응(LPG 공급 차질은 미해소). 출처: CNBC·Bloomberg·OilPrice 11/2."
+  },
+  {
+    "id": "qeshm_1103",
+    "date": "2026-11-03",
+    "end_date": null,
+    "label": "美, 이란 케슘섬 타격 보도 — 그래도 Brent 2일 연속 하락 (103.6)",
+    "archetype": "수요파괴형",
+    "channels": [
+      "brent"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#4ade80",
+    "type": "ceasefire",
+    "is_band": false,
+    "source": "web",
+    "note": "시장이 군사 뉴스보다 협상 뉴스에 반응하기 시작. 11/3 美 중간선거. 출처: CNBC 11/3."
+  },
+  {
+    "id": "brent_sub100_1104",
+    "date": "2026-11-04",
+    "end_date": null,
+    "label": "Brent $100 하회 (94.6, −8.7%) — 합의 기대가 EIA 재고 감소 상쇄",
+    "archetype": "수요파괴형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#4ade80",
+    "type": "ceasefire",
+    "is_band": false,
+    "source": "web",
+    "note": "중간선거 직후. 10월에 쌓인 \"선거 후 공습\" 프리미엄 소멸. MB −8%, FEI는 11/5 −6.6% 로 하루 늦게 반응. 출처: Invezz 11/4."
+  },
+  {
+    "id": "brent_below90_1110",
+    "date": "2026-11-10",
+    "end_date": null,
+    "label": "Brent $90 하회 (8월 이후 처음) — 주간 −16%, 2020년 이후 최대 낙폭",
+    "archetype": "수요파괴형",
+    "channels": [
+      "brent",
+      "lpg",
+      "lng"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 1,
+    "color": "#4ade80",
+    "type": "ceasefire",
+    "is_band": false,
+    "source": "web",
+    "note": "11/9 −5.8%(92.57) 루비오 \"돌파구 가능성 낮다\" 에도 하락 지속. FEI 962 (10/30 고점 대비 −14%), JKM 27.9. 출처: CNBC 11/10, Bloomberg 11/9."
+  },
+  {
+    "id": "iran_deny_1111",
+    "date": "2026-11-11",
+    "end_date": null,
+    "label": "이란 안보수장 \"美와 협상 없다\" → Brent +1.4% 반등 (92.8)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "\"농축 물질 단 한 톨도 반출 불가\". 출처: OilPrice·Reuters 11/11."
+  },
+  {
+    "id": "trump_nodeal_1112",
+    "date": "2026-11-12",
+    "end_date": null,
+    "label": "트럼프 \"이란과 딜 필요 없다, 해협은 우리가 쥐고 있다\" → 유가 반등 (11/13 Brent 95.8)",
+    "archetype": "공급차단형",
+    "channels": [
+      "brent",
+      "lpg"
+    ],
+    "tier": 2,
+    "flag": true,
+    "level": 2,
+    "color": "#ff5555",
+    "type": "war",
+    "is_band": false,
+    "source": "web",
+    "note": "같은 날 우크라이나 평화협상 기대로 장중 −1% 후 반전. 11/16 Brent 92.4, FEI 975, JKM 29.3. 출처: CNBC 11/12, Rigzone 11/13."
   }
 ]

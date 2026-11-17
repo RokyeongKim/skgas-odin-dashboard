@@ -316,3 +316,6 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   .a2-controls { margin-left: 0; }
 }
 .period-filters.dimmed { opacity: 0.35; pointer-events: none; }
+
+.flag-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.flag-controls select { background: #0d1117; color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 3px 6px; font-size: 0.78rem; }

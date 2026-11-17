@@ -2,6 +2,12 @@
 
 const EVENT_COLUMNS = [
   { id: 'current',       label: '현재' },
+  { id: 'brent_below90_1110', label: 'Brent<90(11/10)' },
+  { id: 'peace_draft_1102',   label: '종전초안(11/2)' },
+  { id: 'fei_record_1030',    label: 'FEI고점(10/30)' },
+  { id: 'brent_117_1023',     label: 'Brent117(10/23)' },
+  { id: 'tanker_sink_0910',   label: '유조선격침(9/10)' },
+  { id: 'bessent_deal_0804',  label: '합의기대급락(8/4)' },
   { id: 'iran_escalate', label: '재격화(7/18)' },
   { id: 'strait_open',   label: '봉쇄복원(7/15)' },
   { id: 'strait_close',  label: '봉쇄(7/11)' },

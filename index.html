@@ -40,6 +40,17 @@
       <div class="panel-header">
         <h2>A. Index 시계열 ($/mmbtu)</h2>
         <div class="panel-note">환산: LPG 1ton=47.84mmbtu / Brent·WTI ÷8.2 / MB C3×5.208÷47.84 · 참고환산: C2 ×0.1517, nC4 ×0.0971, iC4 ×0.1010, F/O380 ÷40.5 · <b style="color:#00d4ff">📍 상단 플래그 클릭 → Panel F 상세</b></div>
+        <div class="a2-controls flag-controls">
+          <label>플래그 상세도
+            <select id="flag-level-select">
+              <option value="auto">자동 (기간 연동)</option>
+              <option value="1">Lv1 주요만</option>
+              <option value="2">Lv2 +중간 뉴스</option>
+              <option value="3">Lv3 전부 + ⚡급변일</option>
+            </select>
+          </label>
+          <span id="flag-level-hint" class="val-neutral" style="font-size:.74rem"></span>
+        </div>
       </div>
       <div class="panel-note" style="margin-top:-4px">지표 버튼·범례·표의 지표명에 마우스를 올리면 지표 설명이 표시됩니다.</div>
       <div class="group-toggles" id="group-toggles"></div>

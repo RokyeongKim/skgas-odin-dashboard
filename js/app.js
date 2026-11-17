@@ -2,7 +2,7 @@
 
 import { loadAll, filterByDays, getEvents } from './data.js';
 import { INDEX_META, RELATIVE_PAIRS } from './config.js';
-import { initPanelA, renderPanelA, resizePanelA, toggleIndex } from './panelA.js';
+import { initPanelA, renderPanelA, resizePanelA, toggleIndex, setFlagMode, getFlagThreshold } from './panelA.js';
 import { initPanelA2, renderPanelA2, resizePanelA2 } from './panelA2.js';
 import { initPanelBrief, renderPanelBrief } from './panelBrief.js';
 import { initPanelB, renderPanelB, resizePanelB, loadForwardData, getForwardMonths } from './panelB.js';
@@ -150,6 +150,10 @@ async function init() {
   // 초기 상대가 토글 구성
   buildRelToggles(currentRelTab);
 
+  // Panel A 플래그 상세도 셀렉터
+  const flagSel = document.getElementById('flag-level-select');
+  if (flagSel) flagSel.addEventListener('change', e => { setFlagMode(e.target.value); renderPanelA(filterByDays(currentDays), currentDays); updateFlagHint(); });
+
   // 메인 탭 (1. 실시간 Index / 2. Index 이해)
   const HINTS = { 'tab-live': '실시간 지표 · 해석 · Range · 스프레드 · 옵셔널리티', 'tab-learn': '변동성 · 상관관계 · 상대가 이력 · 대체재 · 왜 JKM 인가 (기간 필터 무관)' };
   document.querySelectorAll('.main-tab').forEach(btn => {
@@ -209,9 +213,17 @@ function syncAllGroupBtns() {
   });
 }
 
+const FLAG_LV_DESC = { 1: 'Lv1 주요 전환점만', 2: 'Lv1+2 중간 뉴스 포함', 3: 'Lv1+2+3 전부 + ⚡데이터 감지 급변일' };
+function updateFlagHint() {
+  const h = document.getElementById('flag-level-hint'); if (!h) return;
+  const thr = getFlagThreshold(currentDays);
+  h.textContent = `현재 ${FLAG_LV_DESC[thr]} (${document.querySelector('.btn-period.active')?.textContent || ''} 보기)`;
+}
+
 function renderCharts() {
   const records = filterByDays(currentDays);
-  renderPanelA(records);
+  renderPanelA(records, currentDays);
+  updateFlagHint();
   renderPanelA2(records);
   renderPanelB(currentMonth);
   renderPanelC(records, currentRelTab);
